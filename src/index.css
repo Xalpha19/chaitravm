@@ -261,7 +261,7 @@ All colors MUST be HSL.
 
   /* 3D Cyber button variant */
   .btn-cyber-3d {
-    @apply relative px-8 py-4 bg-transparent border-2 border-primary text-primary font-bold tracking-wider uppercase transition-all duration-500 overflow-hidden;
+    @apply relative px-8 py-4 bg-transparent border-2 border-primary text-foreground font-bold tracking-wider uppercase transition-all duration-500 overflow-hidden;
     background: var(--gradient-card);
     box-shadow: var(--shadow-3d);
     border-radius: var(--radius);
