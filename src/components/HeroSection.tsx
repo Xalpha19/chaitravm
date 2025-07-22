@@ -4,7 +4,7 @@ import { Shield, Code, Lock, ChevronDown } from 'lucide-react';
 
 const HeroSection = () => {
   const [displayText, setDisplayText] = useState('');
-  const fullText = 'Cybersecurity Professional';
+  const fullText = 'Vulnerability Specialist & Attack Surface Reduction';
 
   useEffect(() => {
     let index = 0;
@@ -59,8 +59,8 @@ const HeroSection = () => {
 
         {/* Description */}
         <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
-          Protecting organizations from cyber threats through innovative security solutions, 
-          penetration testing, and strategic risk assessment based in the United Kingdom.
+          Specialized in vulnerability assessment and attack surface reduction with 5+ years 
+          of experience securing enterprise infrastructure and applications across Scotland.
         </p>
 
         {/* CTA Buttons */}

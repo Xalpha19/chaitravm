@@ -36,7 +36,7 @@ const Index = () => {
       <footer className="relative z-10 py-8 px-6 border-t border-border/30 bg-card/30 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-muted-foreground">
-            © 2024 CyberSec Professional. Securing the digital world, one system at a time.
+            © 2024 Chaitra Vishwanath Malladad. Vulnerability Specialist • Attack Surface Reduction Expert • Scotland, UK
           </p>
         </div>
       </footer>

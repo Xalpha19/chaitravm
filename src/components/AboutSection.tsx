@@ -42,7 +42,7 @@ const AboutSection = () => {
               <div className="space-y-6">
                 <div className="flex items-center gap-3 text-muted-foreground">
                   <MapPin className="w-5 h-5 text-primary neon-purple" />
-                  <span>Based in United Kingdom</span>
+                  <span>Based in Scotland, United Kingdom</span>
                 </div>
                 
                 <div className="flex items-center gap-3 text-muted-foreground">
@@ -50,17 +50,20 @@ const AboutSection = () => {
                   <span>5+ Years Experience</span>
                 </div>
 
+                <h3 className="text-2xl font-bold text-primary mb-4">Chaitra Vishwanath Malladad</h3>
+
                 <p className="text-lg leading-relaxed">
-                  I'm a dedicated cybersecurity professional with extensive experience in 
-                  protecting digital infrastructure and assets. My expertise spans across 
-                  penetration testing, vulnerability assessment, and incident response.
+                  I'm a dedicated vulnerability specialist with 5+ years of experience in 
+                  cybersecurity, focusing on attack surface reduction and comprehensive security 
+                  assessments. My expertise spans vulnerability assessment, penetration testing, 
+                  and developing strategic security frameworks for enterprise environments.
                 </p>
 
                 <p className="text-muted-foreground leading-relaxed">
-                  With a passion for staying ahead of emerging threats, I continuously 
-                  evolve my skillset to provide cutting-edge security solutions. My approach 
-                  combines technical excellence with strategic thinking to deliver comprehensive 
-                  security frameworks that protect organizations from evolving cyber threats.
+                  Based in Scotland, I specialize in identifying and mitigating security 
+                  vulnerabilities across complex digital infrastructures. My approach combines 
+                  technical excellence with strategic thinking to deliver comprehensive attack 
+                  surface reduction strategies that protect organizations from evolving cyber threats.
                 </p>
               </div>
             </Card>

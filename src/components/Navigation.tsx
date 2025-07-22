@@ -44,7 +44,7 @@ const Navigation = () => {
             <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
               <Shield className="w-6 h-6 text-primary group-hover:text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold">CyberSec</span>
+            <span className="text-xl font-bold">Chaitra M</span>
           </div>
 
           {/* Desktop Navigation */}
