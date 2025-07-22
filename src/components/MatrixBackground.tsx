@@ -19,29 +19,46 @@ const MatrixBackground = () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Matrix characters
-    const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+    // Matrix characters with more cyberpunk symbols
+    const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()_+-=[]{}|;:,.<>?~`ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ";
     const matrixArray = matrix.split("");
 
-    const fontSize = 10;
+    const fontSize = 14;
     const columns = canvas.width / fontSize;
 
     const drops: number[] = [];
+    const colors = [
+      '#8B5CF6', // Purple
+      '#A855F7', // Purple variant
+      '#C084FC', // Light purple
+      '#DDD6FE', // Very light purple
+      '#00ff00', // Classic matrix green
+    ];
+
     for (let x = 0; x < columns; x++) {
       drops[x] = 1;
     }
 
     const draw = () => {
-      // Black background with opacity for trail effect
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+      // Darker background with purple tint
+      ctx.fillStyle = 'rgba(16, 15, 23, 0.08)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = '#00ff00';
-      ctx.font = fontSize + 'px monospace';
-
       for (let i = 0; i < drops.length; i++) {
+        // Random color from purple palette
+        const colorIndex = Math.floor(Math.random() * colors.length);
+        ctx.fillStyle = colors[colorIndex];
+        ctx.font = fontSize + 'px "Courier New", monospace';
+        
+        // Add glow effect
+        ctx.shadowColor = colors[colorIndex];
+        ctx.shadowBlur = 8;
+        
         const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        
+        // Reset shadow
+        ctx.shadowBlur = 0;
 
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;

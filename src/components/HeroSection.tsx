@@ -26,25 +26,27 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-6">
-      {/* Floating elements */}
+    <section className="relative min-h-screen flex items-center justify-center px-6 matrix-purple">
+      {/* 3D Floating elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-16 h-16 border border-primary/30 rotate-45 float-animation" />
-        <div className="absolute top-40 right-20 w-8 h-8 bg-primary/20 rotate-12 float-animation" style={{ animationDelay: '2s' }} />
-        <div className="absolute bottom-40 left-20 w-12 h-12 border border-accent/30 rotate-45 float-animation" style={{ animationDelay: '4s' }} />
-        <div className="absolute top-60 right-40 w-6 h-6 bg-accent/20 rotate-45 float-animation" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-20 left-10 w-20 h-20 border-2 border-primary/40 rotate-45 float-animation-3d geometric-3d neon-border" />
+        <div className="absolute top-40 right-20 w-12 h-12 bg-primary/20 rotate-12 float-animation-3d geometric-3d" style={{ animationDelay: '2s' }} />
+        <div className="absolute bottom-40 left-20 w-16 h-16 border-2 border-accent/40 rotate-45 float-animation-3d geometric-3d neon-border" style={{ animationDelay: '4s' }} />
+        <div className="absolute top-60 right-40 w-8 h-8 bg-accent/30 rotate-45 pulse-glow-3d" style={{ animationDelay: '1s' }} />
+        <div className="absolute bottom-60 right-10 w-14 h-14 border border-primary/30 rounded-full float-animation-3d geometric-3d" style={{ animationDelay: '3s' }} />
+        <div className="absolute top-32 right-60 w-6 h-6 bg-primary rotate-3d" style={{ animationDelay: '5s' }} />
       </div>
 
       <div className="text-center z-10 max-w-4xl mx-auto">
         {/* Main heading with glitch effect */}
-        <h1 className="text-6xl md:text-8xl font-bold mb-6">
-          <span className="glitch" data-text="SECURE">SECURE</span>
+        <h1 className="text-6xl md:text-8xl font-bold mb-6 perspective-1000">
+          <span className="glitch-3d neon-purple" data-text="SECURE">SECURE</span>
           <br />
-          <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent hologram-effect">
             DIGITAL
           </span>
           <br />
-          <span className="glitch" data-text="WORLD">WORLD</span>
+          <span className="glitch-3d neon-purple" data-text="WORLD">WORLD</span>
         </h1>
 
         {/* Typing animation subtitle */}
@@ -64,7 +66,7 @@ const HeroSection = () => {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
           <Button 
-            className="btn-cyber group"
+            className="btn-cyber-3d group"
             onClick={() => scrollToSection('contact')}
           >
             <span className="flex items-center gap-2">
@@ -75,7 +77,7 @@ const HeroSection = () => {
           
           <Button 
             variant="outline" 
-            className="border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+            className="border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-500 transform hover:scale-105 hover:-translate-y-1"
             onClick={() => scrollToSection('projects')}
           >
             <span className="flex items-center gap-2">
@@ -85,25 +87,25 @@ const HeroSection = () => {
           </Button>
         </div>
 
-        {/* Skill indicators */}
+        {/* Skill indicators with 3D effects */}
         <div className="flex justify-center gap-8 mb-16">
           <div className="text-center group cursor-pointer">
-            <div className="w-16 h-16 bg-card border border-primary/30 rounded-lg flex items-center justify-center mb-3 group-hover:border-primary group-hover:shadow-lg group-hover:shadow-primary/20 transition-all duration-300">
-              <Shield className="w-8 h-8 text-primary" />
+            <div className="card-3d w-16 h-16 rounded-lg flex items-center justify-center mb-3 border border-primary/30 group-hover:border-primary transition-all duration-500">
+              <Shield className="w-8 h-8 text-primary neon-purple" />
             </div>
             <p className="text-sm text-muted-foreground">Security</p>
           </div>
           
           <div className="text-center group cursor-pointer">
-            <div className="w-16 h-16 bg-card border border-accent/30 rounded-lg flex items-center justify-center mb-3 group-hover:border-accent group-hover:shadow-lg group-hover:shadow-accent/20 transition-all duration-300">
+            <div className="card-3d w-16 h-16 rounded-lg flex items-center justify-center mb-3 border border-accent/30 group-hover:border-accent transition-all duration-500">
               <Lock className="w-8 h-8 text-accent" />
             </div>
             <p className="text-sm text-muted-foreground">Penetration</p>
           </div>
           
           <div className="text-center group cursor-pointer">
-            <div className="w-16 h-16 bg-card border border-primary/30 rounded-lg flex items-center justify-center mb-3 group-hover:border-primary group-hover:shadow-lg group-hover:shadow-primary/20 transition-all duration-300">
-              <Code className="w-8 h-8 text-primary" />
+            <div className="card-3d w-16 h-16 rounded-lg flex items-center justify-center mb-3 border border-primary/30 group-hover:border-primary transition-all duration-500">
+              <Code className="w-8 h-8 text-primary neon-purple" />
             </div>
             <p className="text-sm text-muted-foreground">Development</p>
           </div>

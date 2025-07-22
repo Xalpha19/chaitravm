@@ -8,58 +8,62 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 220 13% 9%;
-    --foreground: 210 40% 98%;
+    --background: 210 11% 4%;
+    --foreground: 210 40% 95%;
 
-    --card: 220 13% 11%;
-    --card-foreground: 210 40% 98%;
+    --card: 210 11% 6%;
+    --card-foreground: 210 40% 95%;
 
-    --popover: 220 13% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 210 11% 6%;
+    --popover-foreground: 210 40% 95%;
 
-    --primary: 142 86% 28%;
-    --primary-foreground: 220 13% 9%;
-    --primary-glow: 142 86% 35%;
+    --primary: 271 81% 56%;
+    --primary-foreground: 210 11% 4%;
+    --primary-glow: 280 100% 70%;
 
-    --secondary: 220 13% 14%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 210 11% 8%;
+    --secondary-foreground: 210 40% 95%;
 
-    --muted: 220 13% 14%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 210 11% 8%;
+    --muted-foreground: 215 20.2% 55%;
 
-    --accent: 197 100% 31%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 285 85% 35%;
+    --accent-foreground: 210 40% 95%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 210 40% 95%;
 
-    --border: 220 13% 18%;
-    --input: 220 13% 14%;
-    --ring: 142 86% 28%;
+    --border: 210 11% 12%;
+    --input: 210 11% 8%;
+    --ring: 271 81% 56%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    /* Cybersecurity theme colors */
-    --cyber-green: 142 86% 28%;
-    --cyber-green-glow: 142 86% 35%;
-    --cyber-blue: 197 100% 31%;
+    /* 3D Cybersecurity theme colors */
     --cyber-purple: 271 81% 56%;
+    --cyber-purple-glow: 280 100% 70%;
+    --cyber-purple-dark: 271 81% 35%;
+    --cyber-blue: 240 100% 70%;
+    --cyber-pink: 320 100% 70%;
     --matrix-green: 120 100% 25%;
     
-    /* Gradients */
-    --gradient-cyber: linear-gradient(135deg, hsl(var(--cyber-green)), hsl(var(--cyber-blue)));
-    --gradient-matrix: linear-gradient(180deg, hsl(var(--background)), hsl(220 13% 6%));
-    --gradient-glow: radial-gradient(circle, hsl(var(--cyber-green) / 0.1), transparent);
+    /* 3D Gradients */
+    --gradient-3d: linear-gradient(135deg, hsl(var(--cyber-purple)), hsl(var(--cyber-purple-dark)), hsl(var(--background)));
+    --gradient-cyber: linear-gradient(135deg, hsl(var(--cyber-purple)), hsl(var(--cyber-blue)));
+    --gradient-matrix: linear-gradient(180deg, hsl(var(--background)), hsl(210 11% 2%));
+    --gradient-glow: radial-gradient(circle, hsl(var(--cyber-purple) / 0.2), transparent);
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(210 11% 8%) 100%);
     
-    /* Shadows */
-    --shadow-cyber: 0 0 20px hsl(var(--cyber-green) / 0.3);
-    --shadow-glow: 0 0 40px hsl(var(--cyber-green-glow) / 0.4);
-    --shadow-matrix: 0 4px 20px hsl(var(--background) / 0.5);
+    /* 3D Shadows */
+    --shadow-3d: 0 8px 32px hsl(var(--cyber-purple) / 0.3), 0 4px 16px hsl(var(--background) / 0.8);
+    --shadow-cyber: 0 0 30px hsl(var(--cyber-purple) / 0.4);
+    --shadow-glow: 0 0 50px hsl(var(--cyber-purple-glow) / 0.5);
+    --shadow-inset: inset 0 2px 4px hsl(var(--background) / 0.3);
+    --shadow-deep: 0 20px 40px hsl(var(--background) / 0.8), 0 10px 20px hsl(var(--cyber-purple) / 0.2);
 
-    /* Animations */
-    --transition-cyber: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-    --radius: 0.5rem;
+    /* 3D Transforms and animations */
+    --transition-3d: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --perspective: 1000px;
 
     --sidebar-background: 0 0% 98%;
 
@@ -140,21 +144,57 @@ All colors MUST be HSL.
     }
   }
 
-  @keyframes pulse-glow {
+  @keyframes pulse-glow-3d {
     0%, 100% {
-      box-shadow: 0 0 20px hsl(var(--cyber-green) / 0.3);
+      box-shadow: var(--shadow-cyber);
+      transform: translateZ(0px);
     }
     50% {
-      box-shadow: 0 0 40px hsl(var(--cyber-green-glow) / 0.6);
+      box-shadow: var(--shadow-glow);
+      transform: translateZ(10px);
     }
   }
 
-  @keyframes float {
+  @keyframes float-3d {
     0%, 100% {
-      transform: translateY(0px);
+      transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+    }
+    25% {
+      transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
     }
     50% {
-      transform: translateY(-20px);
+      transform: translateY(-20px) rotateX(0deg) rotateY(0deg);
+    }
+    75% {
+      transform: translateY(-10px) rotateX(-5deg) rotateY(5deg);
+    }
+  }
+
+  @keyframes rotate-3d {
+    0% {
+      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+    100% {
+      transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    }
+  }
+
+  @keyframes hologram {
+    0%, 100% {
+      opacity: 0.8;
+      filter: hue-rotate(0deg);
+    }
+    25% {
+      opacity: 1;
+      filter: hue-rotate(90deg);
+    }
+    50% {
+      opacity: 0.6;
+      filter: hue-rotate(180deg);
+    }
+    75% {
+      opacity: 1;
+      filter: hue-rotate(270deg);
     }
   }
 
@@ -176,94 +216,202 @@ All colors MUST be HSL.
     }
   }
 
-  /* Animation classes */
+  @keyframes matrix-rain {
+    0% {
+      transform: translateY(-100vh);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
+  }
+
+  /* 3D Animation classes */
   .matrix-animation {
-    animation: matrix-fall linear infinite;
+    animation: matrix-rain linear infinite;
   }
 
-  .pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
+  .pulse-glow-3d {
+    animation: pulse-glow-3d 3s ease-in-out infinite;
+    perspective: var(--perspective);
   }
 
-  .float-animation {
-    animation: float 6s ease-in-out infinite;
+  .float-animation-3d {
+    animation: float-3d 8s ease-in-out infinite;
+    perspective: var(--perspective);
+    transform-style: preserve-3d;
+  }
+
+  .rotate-3d {
+    animation: rotate-3d 20s linear infinite;
+    transform-style: preserve-3d;
+  }
+
+  .hologram-effect {
+    animation: hologram 4s ease-in-out infinite;
   }
 
   .typing-animation {
     overflow: hidden;
-    border-right: 2px solid hsl(var(--cyber-green));
+    border-right: 2px solid hsl(var(--primary));
     white-space: nowrap;
     animation: typing 3s steps(40) 1s 1 normal both, blink 1s infinite;
   }
 
-  /* Cyber button variant */
-  .btn-cyber {
-    @apply relative px-8 py-3 bg-transparent border-2 border-primary text-primary font-semibold tracking-wider uppercase transition-all duration-300 overflow-hidden;
-    box-shadow: var(--shadow-cyber);
+  /* 3D Cyber button variant */
+  .btn-cyber-3d {
+    @apply relative px-8 py-4 bg-transparent border-2 border-primary text-primary font-bold tracking-wider uppercase transition-all duration-500 overflow-hidden;
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-3d);
+    border-radius: var(--radius);
+    transform-style: preserve-3d;
+    perspective: var(--perspective);
   }
 
-  .btn-cyber:hover {
+  .btn-cyber-3d:hover {
     @apply text-primary-foreground;
-    background: var(--gradient-cyber);
-    box-shadow: var(--shadow-glow);
+    background: var(--gradient-3d);
+    box-shadow: var(--shadow-deep);
+    transform: translateY(-4px) rotateX(5deg);
   }
 
-  .btn-cyber::before {
+  .btn-cyber-3d::before {
     content: '';
-    @apply absolute inset-0 bg-primary transform scale-x-0 transition-transform duration-300 origin-left;
+    @apply absolute inset-0 transition-all duration-500 origin-left;
+    background: var(--gradient-cyber);
+    transform: scale3d(0, 1, 1);
+    border-radius: var(--radius);
   }
 
-  .btn-cyber:hover::before {
-    @apply scale-x-100;
+  .btn-cyber-3d:hover::before {
+    transform: scale3d(1, 1, 1);
   }
 
-  .btn-cyber span {
+  .btn-cyber-3d span {
     @apply relative z-10;
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.5);
   }
 
-  /* Glitch text effect */
-  .glitch {
+  /* 3D Card effects */
+  .card-3d {
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-3d);
+    border: 1px solid hsl(var(--border));
+    transform-style: preserve-3d;
+    transition: var(--transition-3d);
+  }
+
+  .card-3d:hover {
+    transform: translateY(-8px) rotateX(5deg) rotateY(5deg);
+    box-shadow: var(--shadow-deep);
+  }
+
+  .card-3d::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-glow);
+    opacity: 0;
+    transition: var(--transition-3d);
+    border-radius: var(--radius);
+  }
+
+  .card-3d:hover::before {
+    opacity: 1;
+  }
+
+  /* Glitch text effect with 3D */
+  .glitch-3d {
     position: relative;
     color: hsl(var(--foreground));
+    transform-style: preserve-3d;
   }
 
-  .glitch::before,
-  .glitch::after {
+  .glitch-3d::before,
+  .glitch-3d::after {
     content: attr(data-text);
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    transition: var(--transition-3d);
   }
 
-  .glitch::before {
-    animation: glitch-1 0.5s infinite;
+  .glitch-3d::before {
+    animation: glitch-3d-1 2s infinite;
     color: hsl(var(--cyber-blue));
     z-index: -1;
+    transform: translateZ(-10px);
   }
 
-  .glitch::after {
-    animation: glitch-2 0.5s infinite;
-    color: hsl(var(--cyber-green));
+  .glitch-3d::after {
+    animation: glitch-3d-2 2s infinite;
+    color: hsl(var(--primary));
     z-index: -2;
+    transform: translateZ(-20px);
   }
 
-  @keyframes glitch-1 {
+  @keyframes glitch-3d-1 {
     0%, 14%, 15%, 49%, 50%, 99%, 100% {
-      transform: translate(0);
+      transform: translate(0) translateZ(-10px) rotateY(0deg);
     }
     15%, 49% {
-      transform: translate(-2px, 2px);
+      transform: translate(-3px, 3px) translateZ(-10px) rotateY(2deg);
     }
   }
 
-  @keyframes glitch-2 {
+  @keyframes glitch-3d-2 {
     0%, 20%, 21%, 62%, 63%, 99%, 100% {
-      transform: translate(0);
+      transform: translate(0) translateZ(-20px) rotateY(0deg);
     }
     21%, 62% {
-      transform: translate(2px, -2px);
+      transform: translate(3px, -3px) translateZ(-20px) rotateY(-2deg);
     }
   }
+
+  /* 3D Geometric shapes */
+  .geometric-3d {
+    transform-style: preserve-3d;
+    animation: float-3d 8s ease-in-out infinite;
+  }
+
+  .geometric-3d::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, hsl(var(--primary) / 0.1), hsl(var(--accent) / 0.1));
+    transform: translateZ(-5px);
+    border-radius: inherit;
+  }
+
+  /* Neon glow effects */
+  .neon-purple {
+    color: hsl(var(--primary));
+    text-shadow: 
+      0 0 5px hsl(var(--primary)),
+      0 0 10px hsl(var(--primary)),
+      0 0 15px hsl(var(--primary)),
+      0 0 20px hsl(var(--primary-glow));
+  }
+
+  .neon-border {
+    border: 1px solid hsl(var(--primary));
+    box-shadow: 
+      0 0 5px hsl(var(--primary) / 0.5),
+      inset 0 0 5px hsl(var(--primary) / 0.2);
+  }
+
+  /* Matrix background for purple theme */
+  .matrix-purple::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.1) 0%, transparent 70%),
+                radial-gradient(circle at 80% 20%, hsl(var(--accent) / 0.1) 0%, transparent 70%),
+                radial-gradient(circle at 40% 80%, hsl(var(--primary-glow) / 0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+}
 }

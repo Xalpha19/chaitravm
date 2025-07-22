@@ -1,4 +1,5 @@
 import MatrixBackground from '@/components/MatrixBackground';
+import GeometricBackground from '@/components/GeometricBackground';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
@@ -7,9 +8,12 @@ import ContactSection from '@/components/ContactSection';
 
 const Index = () => {
   return (
-    <div className="relative min-h-screen bg-background">
+    <div className="relative min-h-screen bg-background perspective-1000">
       {/* Animated Matrix Background */}
       <MatrixBackground />
+      
+      {/* 3D Geometric Background */}
+      <GeometricBackground />
       
       {/* Navigation */}
       <Navigation />

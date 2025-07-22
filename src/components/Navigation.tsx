@@ -60,7 +60,7 @@ const Navigation = () => {
               </button>
             ))}
             <Button 
-              className="btn-cyber"
+              className="btn-cyber-3d"
               onClick={() => scrollToSection('contact')}
             >
               <span>Hire Me</span>
@@ -92,7 +92,7 @@ const Navigation = () => {
                 </button>
               ))}
               <Button 
-                className="w-full btn-cyber mt-4"
+                className="w-full btn-cyber-3d mt-4"
                 onClick={() => scrollToSection('contact')}
               >
                 <span>Hire Me</span>

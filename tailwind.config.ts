@@ -64,12 +64,17 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				cyber: {
-					green: 'hsl(var(--cyber-green))',
-					'green-glow': 'hsl(var(--cyber-green-glow))',
-					blue: 'hsl(var(--cyber-blue))',
 					purple: 'hsl(var(--cyber-purple))',
+					'purple-glow': 'hsl(var(--cyber-purple-glow))',
+					'purple-dark': 'hsl(var(--cyber-purple-dark))',
+					blue: 'hsl(var(--cyber-blue))',
+					pink: 'hsl(var(--cyber-pink))',
 					matrix: 'hsl(var(--matrix-green))'
 				}
+			},
+			perspective: {
+				'1000': '1000px',
+				'2000': '2000px'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
