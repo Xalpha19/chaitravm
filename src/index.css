@@ -390,17 +390,16 @@ All colors MUST be HSL.
     border-radius: inherit;
   }
 
-  /* Neon glow effects - ENHANCED FOR VISIBILITY */
+  /* Neon glow effects - BLUE GLOW WITH REDUCED CONTRAST */
   .neon-purple {
-    color: hsl(var(--primary-glow));
-    font-weight: 700;
+    color: hsl(var(--cyber-blue));
+    font-weight: 600;
     text-shadow: 
-      0 0 5px hsl(var(--primary)),
-      0 0 10px hsl(var(--primary)),
-      0 0 15px hsl(var(--primary)),
-      0 0 20px hsl(var(--primary-glow)),
-      0 0 30px hsl(var(--primary-glow));
-    filter: brightness(1.2);
+      0 0 3px hsl(240 100% 70% / 0.4),
+      0 0 6px hsl(240 100% 70% / 0.3),
+      0 0 9px hsl(240 100% 70% / 0.2),
+      0 0 12px hsl(240 100% 70% / 0.1);
+    filter: brightness(1.0);
   }
 
   .neon-border {
