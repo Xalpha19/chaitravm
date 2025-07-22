@@ -8,33 +8,56 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 220 13% 9%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 13% 11%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 13% 11%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 142 86% 28%;
+    --primary-foreground: 220 13% 9%;
+    --primary-glow: 142 86% 35%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 13% 14%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 13% 14%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 197 100% 31%;
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 13% 18%;
+    --input: 220 13% 14%;
+    --ring: 142 86% 28%;
+
+    --radius: 0.5rem;
+
+    /* Cybersecurity theme colors */
+    --cyber-green: 142 86% 28%;
+    --cyber-green-glow: 142 86% 35%;
+    --cyber-blue: 197 100% 31%;
+    --cyber-purple: 271 81% 56%;
+    --matrix-green: 120 100% 25%;
+    
+    /* Gradients */
+    --gradient-cyber: linear-gradient(135deg, hsl(var(--cyber-green)), hsl(var(--cyber-blue)));
+    --gradient-matrix: linear-gradient(180deg, hsl(var(--background)), hsl(220 13% 6%));
+    --gradient-glow: radial-gradient(circle, hsl(var(--cyber-green) / 0.1), transparent);
+    
+    /* Shadows */
+    --shadow-cyber: 0 0 20px hsl(var(--cyber-green) / 0.3);
+    --shadow-glow: 0 0 40px hsl(var(--cyber-green-glow) / 0.4);
+    --shadow-matrix: 0 4px 20px hsl(var(--background) / 0.5);
+
+    /* Animations */
+    --transition-cyber: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --radius: 0.5rem;
 
@@ -100,6 +123,147 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
+  }
+}
+
+@layer components {
+  /* Matrix animation keyframes */
+  @keyframes matrix-fall {
+    0% {
+      transform: translateY(-100vh);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(var(--cyber-green) / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(var(--cyber-green-glow) / 0.6);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes blink {
+    0%, 50% {
+      opacity: 1;
+    }
+    51%, 100% {
+      opacity: 0;
+    }
+  }
+
+  /* Animation classes */
+  .matrix-animation {
+    animation: matrix-fall linear infinite;
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .typing-animation {
+    overflow: hidden;
+    border-right: 2px solid hsl(var(--cyber-green));
+    white-space: nowrap;
+    animation: typing 3s steps(40) 1s 1 normal both, blink 1s infinite;
+  }
+
+  /* Cyber button variant */
+  .btn-cyber {
+    @apply relative px-8 py-3 bg-transparent border-2 border-primary text-primary font-semibold tracking-wider uppercase transition-all duration-300 overflow-hidden;
+    box-shadow: var(--shadow-cyber);
+  }
+
+  .btn-cyber:hover {
+    @apply text-primary-foreground;
+    background: var(--gradient-cyber);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .btn-cyber::before {
+    content: '';
+    @apply absolute inset-0 bg-primary transform scale-x-0 transition-transform duration-300 origin-left;
+  }
+
+  .btn-cyber:hover::before {
+    @apply scale-x-100;
+  }
+
+  .btn-cyber span {
+    @apply relative z-10;
+  }
+
+  /* Glitch text effect */
+  .glitch {
+    position: relative;
+    color: hsl(var(--foreground));
+  }
+
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .glitch::before {
+    animation: glitch-1 0.5s infinite;
+    color: hsl(var(--cyber-blue));
+    z-index: -1;
+  }
+
+  .glitch::after {
+    animation: glitch-2 0.5s infinite;
+    color: hsl(var(--cyber-green));
+    z-index: -2;
+  }
+
+  @keyframes glitch-1 {
+    0%, 14%, 15%, 49%, 50%, 99%, 100% {
+      transform: translate(0);
+    }
+    15%, 49% {
+      transform: translate(-2px, 2px);
+    }
+  }
+
+  @keyframes glitch-2 {
+    0%, 20%, 21%, 62%, 63%, 99%, 100% {
+      transform: translate(0);
+    }
+    21%, 62% {
+      transform: translate(2px, -2px);
+    }
   }
 }
