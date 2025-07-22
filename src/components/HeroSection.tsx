@@ -28,24 +28,56 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Abstract Art Background Animation */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-accent/20 to-primary/40 animate-pulse" />
-        <div className="absolute inset-0">
-          {/* Floating abstract shapes */}
-          <div className="absolute top-10 left-10 w-32 h-32 bg-primary/20 rounded-full blur-xl animate-bounce" style={{ animationDelay: '0s', animationDuration: '6s' }} />
-          <div className="absolute top-40 right-20 w-24 h-24 bg-accent/30 rounded-full blur-lg animate-bounce" style={{ animationDelay: '2s', animationDuration: '8s' }} />
-          <div className="absolute bottom-32 left-1/4 w-40 h-40 bg-primary/15 rounded-full blur-2xl animate-bounce" style={{ animationDelay: '4s', animationDuration: '10s' }} />
-          <div className="absolute bottom-20 right-1/3 w-28 h-28 bg-accent/25 rounded-full blur-xl animate-bounce" style={{ animationDelay: '1s', animationDuration: '7s' }} />
-          <div className="absolute top-1/2 left-1/2 w-36 h-36 bg-primary/25 rounded-full blur-2xl animate-bounce" style={{ animationDelay: '3s', animationDuration: '9s' }} />
-        </div>
-        {/* Moving gradient waves */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent animate-pulse" />
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-accent/10 to-transparent animate-pulse" style={{ animationDelay: '2s' }} />
+      {/* Dark Purple Space Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-purple-950 to-black" />
+      
+      {/* Glowing and Flickering Stars */}
+      <div className="absolute inset-0">
+        {[...Array(50)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${1 + Math.random() * 2}s`,
+              boxShadow: '0 0 6px rgba(255, 255, 255, 0.8), 0 0 12px rgba(255, 255, 255, 0.5)',
+            }}
+          />
+        ))}
+        {/* Larger glowing stars */}
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i + 50}
+            className="absolute w-2 h-2 bg-white rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 4}s`,
+              animationDuration: `${2 + Math.random() * 3}s`,
+              boxShadow: '0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.3)',
+            }}
+          />
+        ))}
+        {/* Bright twinkling stars */}
+        {[...Array(10)].map((_, i) => (
+          <div
+            key={i + 70}
+            className="absolute w-3 h-3 bg-white rounded-full animate-ping"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${3 + Math.random() * 4}s`,
+              boxShadow: '0 0 15px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.8), 0 0 45px rgba(255, 255, 255, 0.5)',
+            }}
+          />
+        ))}
       </div>
       
       {/* Dark Overlay for Text Readability */}
-      <div className="absolute inset-0 bg-background/85" />
+      <div className="absolute inset-0 bg-black/40" />
 
       {/* Content Container with Glassmorphism */}
       <div className="relative z-10 container-modern section-padding">
