@@ -77,7 +77,7 @@ const HeroSection = () => {
           
           <Button 
             variant="outline" 
-            className="border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-500 transform hover:scale-105 hover:-translate-y-1"
+            className="border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-background transition-all duration-500 transform hover:scale-105 hover:-translate-y-1"
             onClick={() => scrollToSection('projects')}
           >
             <span className="flex items-center gap-2">
