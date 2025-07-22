@@ -28,21 +28,24 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-fixed"
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80")',
-        }}
-      />
-      
-      {/* Dark Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/80 to-background/60" />
-      
-      {/* Animated Tech Pattern Overlay */}
+      {/* Abstract Art Background Animation */}
       <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-accent/20 to-primary/40 animate-pulse" />
+        <div className="absolute inset-0">
+          {/* Floating abstract shapes */}
+          <div className="absolute top-10 left-10 w-32 h-32 bg-primary/20 rounded-full blur-xl animate-bounce" style={{ animationDelay: '0s', animationDuration: '6s' }} />
+          <div className="absolute top-40 right-20 w-24 h-24 bg-accent/30 rounded-full blur-lg animate-bounce" style={{ animationDelay: '2s', animationDuration: '8s' }} />
+          <div className="absolute bottom-32 left-1/4 w-40 h-40 bg-primary/15 rounded-full blur-2xl animate-bounce" style={{ animationDelay: '4s', animationDuration: '10s' }} />
+          <div className="absolute bottom-20 right-1/3 w-28 h-28 bg-accent/25 rounded-full blur-xl animate-bounce" style={{ animationDelay: '1s', animationDuration: '7s' }} />
+          <div className="absolute top-1/2 left-1/2 w-36 h-36 bg-primary/25 rounded-full blur-2xl animate-bounce" style={{ animationDelay: '3s', animationDuration: '9s' }} />
+        </div>
+        {/* Moving gradient waves */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent animate-pulse" />
+        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-accent/10 to-transparent animate-pulse" style={{ animationDelay: '2s' }} />
       </div>
+      
+      {/* Dark Overlay for Text Readability */}
+      <div className="absolute inset-0 bg-background/85" />
 
       {/* Content Container with Glassmorphism */}
       <div className="relative z-10 container-modern section-padding">
