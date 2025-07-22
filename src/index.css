@@ -390,16 +390,16 @@ All colors MUST be HSL.
     border-radius: inherit;
   }
 
-  /* Neon glow effects - CYAN GLOW FOR BETTER VISIBILITY */
+  /* Neon glow effects - CYAN GLOW REDUCED BY 50% */
   .neon-purple {
     color: hsl(180 100% 70%);
     font-weight: 600;
     text-shadow: 
-      0 0 5px hsl(180 100% 70% / 0.8),
-      0 0 10px hsl(180 100% 70% / 0.6),
-      0 0 15px hsl(180 100% 70% / 0.4),
-      0 0 20px hsl(180 100% 70% / 0.3);
-    filter: brightness(1.1);
+      0 0 2.5px hsl(180 100% 70% / 0.4),
+      0 0 5px hsl(180 100% 70% / 0.3),
+      0 0 7.5px hsl(180 100% 70% / 0.2),
+      0 0 10px hsl(180 100% 70% / 0.15);
+    filter: brightness(1.05);
   }
 
   .neon-border {
