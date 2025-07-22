@@ -60,7 +60,7 @@ const Navigation = () => {
               </button>
             ))}
             <Button 
-              className="btn-cyber-3d"
+              className="bg-black text-green-400 border-green-400 hover:bg-green-400 hover:text-black transition-all duration-500"
               onClick={() => scrollToSection('contact')}
             >
               <span>Hire Me</span>
