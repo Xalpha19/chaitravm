@@ -1,188 +1,192 @@
+
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Mail, Phone, MapPin, Linkedin, Github, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Github, Send, Clock, CheckCircle } from 'lucide-react';
 
 const ContactSection = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
     console.log('Form submitted');
   };
 
+  const contactMethods = [
+    {
+      icon: <Mail className="w-5 h-5" />,
+      title: 'Email',
+      value: 'chaitra.malladad@example.com',
+      description: 'Best for detailed inquiries'
+    },
+    {
+      icon: <Phone className="w-5 h-5" />,
+      title: 'Phone',
+      value: '+44 7700 900123',
+      description: 'For urgent security matters'
+    },
+    {
+      icon: <MapPin className="w-5 h-5" />,
+      title: 'Location',
+      value: 'Scotland, UK',
+      description: 'Available for on-site consultations'
+    }
+  ];
+
+  const services = [
+    'Vulnerability Assessment',
+    'Penetration Testing',
+    'Security Auditing',
+    'Incident Response',
+    'Compliance Review',
+    'Security Training'
+  ];
+
   return (
-    <section id="contact" className="py-20 px-6 relative">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Get In <span className="text-primary">Touch</span>
+    <section id="contact" className="section-padding bg-secondary/20">
+      <div className="container-modern">
+        <div className="text-center mb-16 animate-fade-in">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
+            Let's Work Together
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary to-accent mx-auto mb-8"></div>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ready to secure your digital infrastructure? Let's discuss how I can help 
-            protect your organization from cyber threats.
+          <div className="w-16 h-1 bg-primary mx-auto mb-6"></div>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
+            Ready to strengthen your cybersecurity posture? Let's discuss how I can help 
+            protect your organization from evolving threats.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-3 gap-8">
           {/* Contact Information */}
-          <div className="space-y-8">
-            <Card className="p-8 bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-300">
-              <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3">
-                <div className="w-3 h-3 bg-primary rounded-full"></div>
-                Contact Information
-              </h3>
+          <div className="lg:col-span-1 space-y-6 animate-fade-in-up">
+            <Card className="card-modern p-6">
+              <h3 className="text-xl font-semibold mb-6">Get In Touch</h3>
               
-              <div className="space-y-6">
-                <div className="flex items-center gap-4 group cursor-pointer">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                    <Mail className="w-5 h-5 text-primary group-hover:text-primary-foreground" />
+              <div className="space-y-4">
+                {contactMethods.map((method, index) => (
+                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg hover:bg-secondary/50 transition-colors cursor-pointer">
+                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary flex-shrink-0">
+                      {method.icon}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-medium text-sm">{method.title}</h4>
+                      <p className="text-sm text-foreground font-mono">{method.value}</p>
+                      <p className="text-xs text-muted-foreground">{method.description}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium">Email</p>
-                    <p className="text-muted-foreground">chaitra.malladad@example.com</p>
-                  </div>
-                </div>
+                ))}
+              </div>
+            </Card>
 
-                <div className="flex items-center gap-4 group cursor-pointer">
-                  <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center group-hover:bg-accent group-hover:text-accent-foreground transition-all duration-300">
-                    <Phone className="w-5 h-5 text-accent group-hover:text-accent-foreground" />
+            <Card className="card-modern p-6">
+              <h3 className="text-lg font-semibold mb-4">Services Offered</h3>
+              <div className="space-y-2">
+                {services.map((service, index) => (
+                  <div key={index} className="flex items-center gap-2 text-sm">
+                    <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                    <span>{service}</span>
                   </div>
-                  <div>
-                    <p className="font-medium">Phone</p>
-                    <p className="text-muted-foreground">+44 7700 900123</p>
-                  </div>
-                </div>
+                ))}
+              </div>
+            </Card>
 
-                <div className="flex items-center gap-4 group cursor-pointer">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                    <MapPin className="w-5 h-5 text-primary group-hover:text-primary-foreground" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Location</p>
-                    <p className="text-muted-foreground">Scotland, United Kingdom</p>
-                  </div>
-                </div>
+            <Card className="card-modern p-6">
+              <h3 className="text-lg font-semibold mb-4">Response Time</h3>
+              <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                <Clock className="w-4 h-4 text-primary" />
+                <span>Typically within 24 hours</span>
               </div>
             </Card>
 
             {/* Social Links */}
-            <Card className="p-8 bg-card/50 backdrop-blur-sm border-border/50 hover:border-accent/30 transition-all duration-300">
-              <h3 className="text-xl font-semibold mb-6 flex items-center gap-3">
-                <div className="w-3 h-3 bg-accent rounded-full"></div>
-                Connect With Me
-              </h3>
+            <div className="flex gap-3">
+              <Button 
+                variant="outline" 
+                size="icon" 
+                className="hover:bg-primary hover:text-primary-foreground transition-colors"
+              >
+                <Linkedin className="w-4 h-4" />
+              </Button>
               
-              <div className="flex gap-4">
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                >
-                  <Linkedin className="w-5 h-5" />
-                </Button>
-                
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  className="border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
-                >
-                  <Github className="w-5 h-5" />
-                </Button>
-                
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                >
-                  <Twitter className="w-5 h-5" />
-                </Button>
-              </div>
-            </Card>
-
-            {/* Quick Stats */}
-            <Card className="p-8 bg-card/50 backdrop-blur-sm border-border/50">
-              <h3 className="text-xl font-semibold mb-6">Why Choose Me?</h3>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-sm">5+ Years of Experience</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span className="text-sm">Industry Certified Professional</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-sm">24/7 Emergency Response</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span className="text-sm">Proven Track Record</span>
-                </div>
-              </div>
-            </Card>
+              <Button 
+                variant="outline" 
+                size="icon" 
+                className="hover:bg-primary hover:text-primary-foreground transition-colors"
+              >
+                <Github className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
 
           {/* Contact Form */}
-          <Card className="p-8 bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-300">
-            <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
+          <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <Card className="card-modern p-8">
+              <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
+              
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName" className="text-sm font-medium">First Name</Label>
+                    <Input 
+                      id="firstName" 
+                      placeholder="John" 
+                      className="bg-background border-border focus:border-primary transition-colors"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName" className="text-sm font-medium">Last Name</Label>
+                    <Input 
+                      id="lastName" 
+                      placeholder="Doe" 
+                      className="bg-background border-border focus:border-primary transition-colors"
+                    />
+                  </div>
+                </div>
+
                 <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
+                  <Label htmlFor="email" className="text-sm font-medium">Email Address</Label>
                   <Input 
-                    id="firstName" 
-                    placeholder="John" 
-                    className="bg-background/50 border-border/50 focus:border-primary transition-all duration-300"
+                    id="email" 
+                    type="email" 
+                    placeholder="john.doe@company.com"
+                    className="bg-background border-border focus:border-primary transition-colors"
                   />
                 </div>
+
                 <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
+                  <Label htmlFor="company" className="text-sm font-medium">Company (Optional)</Label>
                   <Input 
-                    id="lastName" 
-                    placeholder="Doe" 
-                    className="bg-background/50 border-border/50 focus:border-primary transition-all duration-300"
+                    id="company" 
+                    placeholder="Your Company"
+                    className="bg-background border-border focus:border-primary transition-colors"
                   />
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
-                <Input 
-                  id="email" 
-                  type="email" 
-                  placeholder="john.doe@example.com"
-                  className="bg-background/50 border-border/50 focus:border-primary transition-all duration-300"
-                />
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="subject" className="text-sm font-medium">Subject</Label>
+                  <Input 
+                    id="subject" 
+                    placeholder="Security Consultation Request"
+                    className="bg-background border-border focus:border-primary transition-colors"
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="subject">Subject</Label>
-                <Input 
-                  id="subject" 
-                  placeholder="Security Consultation Request"
-                  className="bg-background/50 border-border/50 focus:border-primary transition-all duration-300"
-                />
-              </div>
+                <div className="space-y-2">
+                  <Label htmlFor="message" className="text-sm font-medium">Message</Label>
+                  <Textarea 
+                    id="message" 
+                    placeholder="Tell me about your security requirements, current challenges, or any specific services you're interested in..."
+                    className="min-h-32 bg-background border-border focus:border-primary transition-colors resize-none"
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="message">Message</Label>
-                <Textarea 
-                  id="message" 
-                  placeholder="Tell me about your security requirements..."
-                  className="min-h-32 bg-background/50 border-border/50 focus:border-primary transition-all duration-300 resize-none"
-                />
-              </div>
-
-              <Button type="submit" className="w-full btn-cyber">
-                <span>Send Message</span>
-              </Button>
-            </form>
-          </Card>
+                <Button type="submit" className="w-full btn-primary group">
+                  <Send className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  Send Message
+                </Button>
+              </form>
+            </Card>
+          </div>
         </div>
       </div>
     </section>
