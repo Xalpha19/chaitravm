@@ -66,7 +66,7 @@ const HeroSection = () => {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
           <Button 
-            className="border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-background transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 group"
+            className="bg-black border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-background transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 group"
             onClick={() => scrollToSection('contact')}
           >
             <span className="flex items-center gap-2">
