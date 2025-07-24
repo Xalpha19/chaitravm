@@ -2,7 +2,7 @@
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
-import ProjectsSection from '@/components/ProjectsSection';
+import WorkExperienceSection from '@/components/WorkExperienceSection';
 import ContactSection from '@/components/ContactSection';
 
 const Index = () => {
@@ -19,8 +19,8 @@ const Index = () => {
       {/* About Section */}
       <AboutSection />
       
-      {/* Projects Section */}
-      <ProjectsSection />
+      {/* Work Experience Section */}
+      <WorkExperienceSection />
       
       {/* Contact Section */}
       <ContactSection />
