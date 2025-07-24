@@ -21,9 +21,7 @@ const AboutSection = () => {
     period: '2019 - 2020',
     description: 'Implemented security frameworks and conducted regular security audits.'
   }];
-
-  return (
-    <section id="about" className="py-20 px-6 bg-secondary/20">
+  return <section id="about" className="py-20 px-6 bg-secondary/20">
       <div className="container-modern">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-foreground mb-4">About Me</h2>
@@ -40,32 +38,16 @@ const AboutSection = () => {
               Core Skills
             </h3>
             <div className="flex flex-wrap gap-2">
-              {skills.map((skill) => (
-                <Badge key={skill} variant="secondary" className="px-3 py-1">
+              {skills.map(skill => <Badge key={skill} variant="secondary" className="px-3 py-1">
                   {skill}
-                </Badge>
-              ))}
+                </Badge>)}
             </div>
           </Card>
 
           {/* Certification */}
-          <Card className="p-8">
-            <h3 className="text-2xl font-semibold mb-6 flex items-center gap-2">
-              <Badge className="w-6 h-6 text-primary" />
-              Certification
-            </h3>
-            <div className="space-y-3">
-              {certifications.map((cert) => (
-                <div key={cert} className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                  <span className="text-muted-foreground">{cert}</span>
-                </div>
-              ))}
-            </div>
-          </Card>
+          
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
 export default AboutSection;
