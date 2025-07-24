@@ -58,7 +58,14 @@ const WorkExperienceSection = () => {
       location: 'London, United Kingdom',
       duration: 'Graduated: Aug 2023',
       grade: 'Distinction',
-      description: 'Focused on digital forensics, incident response, and advanced vulnerability analysis using both theoretical and hands-on lab approaches. Designed implementation plan for PCI-DSS Standards framework.'
+      description: 'Focused on digital forensics, incident response, and advanced vulnerability analysis using both theoretical and hands-on lab approaches. Designed implementation plan for PCI-DSS Standards framework.',
+      activities: [
+        'Advanced Digital Forensics and Evidence Analysis',
+        'Incident Response and Threat Hunting Methodologies',
+        'Vulnerability Assessment and Penetration Testing',
+        'Cyber Law and Legal Framework Studies',
+        'Research on ICS/SCADA Security Implementations'
+      ]
     },
     {
       degree: 'Post Graduation Diploma in Digital Forensics and Cyber Security',
@@ -66,7 +73,15 @@ const WorkExperienceSection = () => {
       location: 'India',
       duration: 'Jun 2018 - May 2019',
       grade: '84%',
-      description: 'Trained on Reverse Engineering, VAPT, Cyber Forensics, Malware Analysis. Participated in vulnerability challenges and developed enterprise cybersecurity policies.'
+      description: 'Comprehensive program covering advanced cybersecurity concepts and practical implementation of security frameworks.',
+      activities: [
+        'Participated in Cyber Awareness programs and security workshops',
+        'Trained on Reverse Engineering and Malware Analysis techniques',
+        'Conducted Vulnerability Assessment and Penetration Testing (VAPT)',
+        'Engaged in vulnerability discovery challenges and CTF competitions',
+        'Developed enterprise cybersecurity policies and risk assessment frameworks',
+        'Studied ethical, legal, and economic aspects of cybersecurity'
+      ]
     },
     {
       degree: 'Bachelor of Computer Application',
@@ -74,7 +89,23 @@ const WorkExperienceSection = () => {
       location: 'Hubballi, India',
       duration: 'Jun 2015 - May 2018',
       grade: '94%',
-      description: 'Computer Programming focus. Participated in Inter and Intra College Coding Fests and won prizes and certificates.'
+      description: 'Comprehensive computer programming curriculum with focus on software development and system analysis.',
+      activities: [
+        'Participated in Inter and Intra College Coding Competitions',
+        'Won multiple prizes and certificates in programming contests',
+        'Developed various software applications using multiple programming languages',
+        'Engaged in collaborative projects and team-based development',
+        'Studied data structures, algorithms, and software engineering principles'
+      ]
+    }
+  ];
+
+  const certifications = [
+    {
+      name: 'Certified Ethical Hacker (CEH)',
+      issuer: 'EC-Council',
+      status: 'Active',
+      description: 'Industry-recognized certification in ethical hacking and penetration testing methodologies.'
     }
   ];
 
@@ -229,6 +260,50 @@ const WorkExperienceSection = () => {
                 
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   {edu.description}
+                </p>
+                
+                {edu.activities && (
+                  <div>
+                    <h5 className="text-xs font-medium mb-2">Key Activities:</h5>
+                    <div className="space-y-1">
+                      {edu.activities.map((activity, actIndex) => (
+                        <div key={actIndex} className="flex items-start gap-2 text-xs text-muted-foreground">
+                          <div className="w-1 h-1 bg-primary rounded-full mt-1.5 flex-shrink-0"></div>
+                          <span>{activity}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </Card>
+          ))}
+        </div>
+
+        {/* Certifications Section */}
+        <div className="text-center mb-12 animate-fade-in">
+          <h3 className="text-3xl font-bold mb-4">Certifications</h3>
+          <div className="w-12 h-0.5 bg-primary mx-auto mb-8"></div>
+        </div>
+
+        <div className="flex justify-center mb-20">
+          {certifications.map((cert, index) => (
+            <Card 
+              key={index} 
+              className="card-modern card-hover p-6 animate-fade-in-up max-w-md"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="text-center space-y-4">
+                <div className="p-3 bg-primary/10 rounded-lg text-primary w-fit mx-auto">
+                  <Shield className="w-8 h-8" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-primary mb-1">{cert.name}</h4>
+                  <p className="text-sm font-medium">{cert.issuer}</p>
+                  <Badge variant="outline" className="text-xs mt-2">{cert.status}</Badge>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {cert.description}
                 </p>
               </div>
             </Card>
