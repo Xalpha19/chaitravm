@@ -127,10 +127,17 @@ const HeroSection = () => {
                   variant="outline" 
                   size="lg"
                   className="border-border/30 bg-background/20 backdrop-blur-sm hover:bg-background/40 transition-all duration-300"
-                  onClick={() => scrollToSection('projects')}
+                  onClick={() => {
+                    const link = document.createElement('a');
+                    link.href = '/resume.pdf';
+                    link.download = 'Chaitra_Vishwanath_Malladad_Resume.pdf';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                  }}
                 >
                   <Download className="w-4 h-4" />
-                  View Portfolio
+                  Download Resume
                 </Button>
               </div>
             </div>
