@@ -143,19 +143,18 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Professional highlights with glass effect */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 max-w-3xl mx-auto">
+          {/* Professional expertise areas with glass effect */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-8 max-w-4xl mx-auto">
             {[
-              { number: '5+', label: 'Years Experience' },
-              { number: '50+', label: 'Security Audits' },
-              { number: '100+', label: 'Vulnerabilities Found' }
-            ].map((stat, index) => (
+              'Threat Intelligence',
+              'Vulnerability Management'
+            ].map((expertise, index) => (
               <div 
                 key={index}
                 className="backdrop-blur-md bg-card/20 border border-border/10 rounded-2xl p-6 text-center space-y-2 hover:bg-card/30 transition-all duration-300 hover:scale-105"
               >
-                <div className="text-2xl font-bold text-primary drop-shadow-sm">{stat.number}</div>
-                <div className="text-sm text-muted-foreground/80">{stat.label}</div>
+                <div className="text-xl font-bold text-primary drop-shadow-sm">Expertise in</div>
+                <div className="text-lg text-foreground/90 font-medium">{expertise}</div>
               </div>
             ))}
           </div>
