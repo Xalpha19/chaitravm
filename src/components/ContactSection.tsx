@@ -74,7 +74,15 @@ const ContactSection = () => {
                        {method.icon}
                      </div>
                      <div className="flex-1 min-w-0">
-                       <h4 className="font-medium text-sm">{method.title}</h4>
+                       <h4 className="font-medium text-sm">
+                         {method.link ? (
+                           <a href={method.link} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                             {method.title}
+                           </a>
+                         ) : (
+                           method.title
+                         )}
+                       </h4>
                        <p className="text-sm text-foreground font-mono">{method.value}</p>
                        <p className="text-xs text-muted-foreground">{method.description}</p>
                      </div>
