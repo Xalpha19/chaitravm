@@ -4,11 +4,12 @@ import { Button } from '@/components/ui/button';
 import { MapPin, Calendar, ExternalLink, ArrowRight, Building, Shield, Search, Bug } from 'lucide-react';
 const WorkExperienceSection = () => {
   const experiences = [{
-    title: 'Cyber Security Analyst (Threat Intelligence)',
+    title: 'Security Analyst',
+    subtitle: '(Threat Intelligence)',
     company: 'Redinent Innovation Pvt Ltd',
     location: 'Bengaluru, India',
     duration: 'Jul 2023 – Jan 2025',
-    icon: <Shield className="w-6 h-6" />,
+    icon: <Building className="w-6 h-6" />,
     responsibilities: ['Implemented signature analysis in ICS environments to enhance threat detection by identifying and documenting malicious patterns.', 'Created Python scripts for automated vulnerability scanning and web crawling, improving data collection speed and accuracy.', 'Identified zero-day vulnerabilities and coordinated mitigation strategies using advanced research and tools.', 'Provided risk-based security assessments and actionable insights to support stakeholder remediation efforts.', 'Utilised OSINT tools to gather contextual threat intelligence and enhance vulnerability assessments with real-world data.'],
     technologies: ['Python', 'ICS Security', 'OSINT', 'Vulnerability Assessment', 'Threat Intelligence']
   }, {
@@ -25,7 +26,7 @@ const WorkExperienceSection = () => {
     company: 'GlobalsITES Pvt Ltd',
     location: 'Bengaluru, India',
     duration: 'Jun 2020 – Apr 2021',
-    icon: <Search className="w-6 h-6" />,
+    icon: <Building className="w-6 h-6" />,
     responsibilities: ['Conducted system configuration reviews and technical controls to identify vulnerabilities and harden virtual servers.', 'Utilised open-source tools to collect, profile, and archive threat intelligence data through a custom Python tool.', 'Conducted web application penetration testing using proxy environments and created detailed remediation documentation.'],
     technologies: ['Python', 'Penetration Testing', 'Vulnerability Assessment', 'Server Hardening', 'Web Application Security']
   }];
@@ -103,6 +104,7 @@ const WorkExperienceSection = () => {
                       <div>
                         <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">
                           {exp.title}
+                          {exp.subtitle && <span className="block text-base font-normal text-muted-foreground">{exp.subtitle}</span>}
                         </h3>
                         <p className="text-primary font-medium">{exp.company}</p>
                       </div>

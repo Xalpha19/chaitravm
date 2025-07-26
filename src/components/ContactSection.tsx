@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Mail, Phone, MapPin, Linkedin, Github, Send, Clock, CheckCircle } from 'lucide-react';
+import { Mail, Calendar, MapPin, Linkedin, ExternalLink, MessageCircle, Send } from 'lucide-react';
 
 const ContactSection = () => {
   const handleSubmit = (e: React.FormEvent) => {
@@ -20,10 +20,11 @@ const ContactSection = () => {
       description: 'Best for detailed inquiries'
     },
     {
-      icon: <Phone className="w-5 h-5" />,
-      title: 'Phone',
-      value: '+44 7700 900123',
-      description: 'For urgent security matters'
+      icon: <Calendar className="w-5 h-5" />,
+      title: 'Schedule a Call',
+      value: 'calendly.com/chaitramalladad-proton/30min',
+      description: 'Book a 30-minute consultation',
+      link: 'https://calendly.com/chaitramalladad-proton/30min'
     },
     {
       icon: <MapPin className="w-5 h-5" />,
@@ -63,65 +64,78 @@ const ContactSection = () => {
               <h3 className="text-xl font-semibold mb-6">Get In Touch</h3>
               
               <div className="space-y-4">
-                {contactMethods.map((method, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg hover:bg-secondary/50 transition-colors cursor-pointer">
-                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary flex-shrink-0">
-                      {method.icon}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-sm">{method.title}</h4>
-                      <p className="text-sm text-foreground font-mono">{method.value}</p>
-                      <p className="text-xs text-muted-foreground">{method.description}</p>
-                    </div>
-                  </div>
-                ))}
+                 {contactMethods.map((method, index) => (
+                   <div 
+                     key={index} 
+                     className="flex items-start gap-3 p-3 rounded-lg hover:bg-secondary/50 transition-colors cursor-pointer"
+                     onClick={() => method.link && window.open(method.link, '_blank')}
+                   >
+                     <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary flex-shrink-0">
+                       {method.icon}
+                     </div>
+                     <div className="flex-1 min-w-0">
+                       <h4 className="font-medium text-sm">{method.title}</h4>
+                       <p className="text-sm text-foreground font-mono">{method.value}</p>
+                       <p className="text-xs text-muted-foreground">{method.description}</p>
+                     </div>
+                   </div>
+                 ))}
               </div>
             </Card>
 
             <Card className="card-modern p-6">
-              <h3 className="text-lg font-semibold mb-4">Services Offered</h3>
-              <div className="space-y-2">
-                {services.map((service, index) => (
-                  <div key={index} className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                    <span>{service}</span>
+              <h3 className="text-lg font-semibold mb-4">Connect With Me</h3>
+              <div className="space-y-3">
+                <a 
+                  href="https://www.linkedin.com/in/chaitra-malladad/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-secondary/50 transition-colors group"
+                >
+                  <Linkedin className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+                  <div>
+                    <p className="text-sm font-medium">LinkedIn</p>
+                    <p className="text-xs text-muted-foreground">Professional Network</p>
                   </div>
-                ))}
+                </a>
+                
+                <a 
+                  href="https://chaitravm.wordpress.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-secondary/50 transition-colors group"
+                >
+                  <ExternalLink className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+                  <div>
+                    <p className="text-sm font-medium">WordPress Blog</p>
+                    <p className="text-xs text-muted-foreground">Technical Articles</p>
+                  </div>
+                </a>
+                
+                <a 
+                  href="https://discordapp.com/users/1116664469846761472" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-secondary/50 transition-colors group"
+                >
+                  <MessageCircle className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+                  <div>
+                    <p className="text-sm font-medium">Discord</p>
+                    <p className="text-xs text-muted-foreground">Quick Chat</p>
+                  </div>
+                </a>
               </div>
             </Card>
 
-            <Card className="card-modern p-6">
-              <h3 className="text-lg font-semibold mb-4">Response Time</h3>
-              <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                <Clock className="w-4 h-4 text-primary" />
-                <span>Typically within 24 hours</span>
-              </div>
-            </Card>
-
-            {/* Social Links */}
-            <div className="flex gap-3">
-              <Button 
-                variant="outline" 
-                size="icon" 
-                className="hover:bg-primary hover:text-primary-foreground transition-colors"
-              >
-                <Linkedin className="w-4 h-4" />
-              </Button>
-              
-              <Button 
-                variant="outline" 
-                size="icon" 
-                className="hover:bg-primary hover:text-primary-foreground transition-colors"
-              >
-                <Github className="w-4 h-4" />
-              </Button>
-            </div>
           </div>
 
           {/* Contact Form */}
           <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <Card className="card-modern p-8">
-              <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
+              <h3 className="text-2xl font-semibold mb-6">Send a Secure Message</h3>
+              <p className="text-sm text-muted-foreground mb-6">
+                All messages are encrypted and handled securely. Please provide detailed information about your security requirements.
+              </p>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -130,6 +144,7 @@ const ContactSection = () => {
                     <Input 
                       id="firstName" 
                       placeholder="John" 
+                      required
                       className="bg-background border-border focus:border-primary transition-colors"
                     />
                   </div>
@@ -138,6 +153,7 @@ const ContactSection = () => {
                     <Input 
                       id="lastName" 
                       placeholder="Doe" 
+                      required
                       className="bg-background border-border focus:border-primary transition-colors"
                     />
                   </div>
@@ -149,6 +165,7 @@ const ContactSection = () => {
                     id="email" 
                     type="email" 
                     placeholder="john.doe@company.com"
+                    required
                     className="bg-background border-border focus:border-primary transition-colors"
                   />
                 </div>
@@ -167,6 +184,7 @@ const ContactSection = () => {
                   <Input 
                     id="subject" 
                     placeholder="Security Consultation Request"
+                    required
                     className="bg-background border-border focus:border-primary transition-colors"
                   />
                 </div>
@@ -176,6 +194,8 @@ const ContactSection = () => {
                   <Textarea 
                     id="message" 
                     placeholder="Tell me about your security requirements, current challenges, or any specific services you're interested in..."
+                    required
+                    minLength={20}
                     className="min-h-32 bg-background border-border focus:border-primary transition-colors resize-none"
                   />
                 </div>

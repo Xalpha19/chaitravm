@@ -44,8 +44,23 @@ const AboutSection = () => {
             </div>
           </Card>
 
-          {/* Certification */}
-          
+          {/* Professional Development & Training */}
+          <Card className="p-8">
+            <h3 className="text-2xl font-semibold mb-6 flex items-center gap-2">
+              <Calendar className="w-6 h-6 text-primary" />
+              Professional Development & Training
+            </h3>
+            <div className="space-y-4">
+              <div className="border-l-2 border-primary/20 pl-4">
+                <h4 className="font-medium text-foreground">Antisiphone Training</h4>
+                <p className="text-sm text-muted-foreground">SOC Core Skills</p>
+              </div>
+              <div className="border-l-2 border-primary/20 pl-4">
+                <h4 className="font-medium text-foreground">AWS Skills Center</h4>
+                <p className="text-sm text-muted-foreground">Cloud Practitioner</p>
+              </div>
+            </div>
+          </Card>
         </div>
       </div>
     </section>;
