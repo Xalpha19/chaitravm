@@ -1,7 +1,7 @@
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { MapPin, Calendar, ExternalLink, ArrowRight, Building, Shield, Search, Bug } from 'lucide-react';
+import { MapPin, Calendar, ExternalLink, ArrowRight, Building, Shield, Search, Bug, GraduationCap, Award } from 'lucide-react';
 const WorkExperienceSection = () => {
   const experiences = [{
     title: 'Security Analyst',
@@ -27,8 +27,39 @@ const WorkExperienceSection = () => {
     location: 'Bengaluru, India',
     duration: 'Jun 2020 – Apr 2021',
     icon: <Building className="w-6 h-6" />,
-    responsibilities: ['Conducted system configuration reviews and technical controls to identify vulnerabilities and harden virtual servers.', 'Utilised open-source tools to collect, profile, and archive threat intelligence data through a custom Python tool.', 'Conducted web application penetration testing using proxy environments and created detailed remediation documentation.'],
-    technologies: ['Python', 'Penetration Testing', 'Vulnerability Assessment', 'Server Hardening', 'Web Application Security']
+    responsibilities: [
+      'Conducted vulnerability assessments on internal networks and web applications, identifying and reporting exploitable weaknesses that informed patching and strengthened the organisation\'s overall security posture.',
+      'Utilised tools such as Metasploit and Burp Suite to simulate real-world attacks, helping internal teams understand risk exposure and validate the effectiveness of existing controls.',
+      'Automated security testing and data parsing using Python, reducing manual workload and improving turnaround time for vulnerability reporting.',
+      'Delivered Virtual Private Server (VPS) and system hardening recommendations for both Linux and Windows environments, resulting in a measurable reduction in misconfigurations and open exposures across deployed infrastructure.',
+      'Supported threat identification efforts through technical reconnaissance, open-source tooling, and forensic analysis to assess risk from targeted attacks.',
+      'Applied offensive techniques, including brute force simulations and process dumping, in controlled settings to validate detection capabilities and inform SIEM rule tuning.'
+    ],
+    technologies: ['Python', 'Metasploit', 'Burp Suite', 'SIEM', 'Vulnerability Assessment', 'Linux', 'Windows', 'Penetration Testing']
+  }, {
+    title: 'Cybercrime Investigation Intern',
+    company: 'Cyber Crime Helpline LLP',
+    location: 'Pune, India',
+    duration: 'April 2019 - May 2019',
+    icon: <Building className="w-6 h-6" />,
+    responsibilities: [
+      'Delivered live demonstrations and presentations on cybercrime techniques to raise awareness and understanding among stakeholders.',
+      'Learnt about the tools and methods used in real-world cybercrime investigations, such as phishing tracebacks and digital evidence gathering.',
+      'Investigated practical use cases involving mobile code misuse, call forwarding attacks, and Call Detail Record (CDR) analysis.'
+    ],
+    technologies: ['Digital Forensics', 'CDR Analysis', 'Cybercrime Investigation', 'Evidence Collection', 'Phishing Analysis']
+  }, {
+    title: 'Cybersecurity Analyst Intern',
+    company: 'CyberOps Infosec LLP',
+    location: 'Jaipur, India',
+    duration: 'June 2019 - October 2019',
+    icon: <Building className="w-6 h-6" />,
+    responsibilities: [
+      'Collaborated with law enforcement and internal analysts to assist in active cybercrime investigations, supporting digital evidence collection, technical documentation, and forensic reporting for legal proceedings.',
+      'Drafted threat advisories and contributed to internal research reports for stakeholders, including police investigators and private clients, focused on emerging threats and mitigation strategies.',
+      'Performed in-house penetration testing and supported information security projects by documenting vulnerabilities and recommending remediation measures aligned with compliance and operational requirements.'
+    ],
+    technologies: ['Penetration Testing', 'Digital Forensics', 'Threat Intelligence', 'Vulnerability Assessment', 'Law Enforcement Collaboration', 'Technical Documentation']
   }];
   const education = [{
     degree: 'MSc Computer Forensics and Cyber Security',

@@ -1,29 +1,23 @@
 
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Mail, Calendar, MapPin, Linkedin, ExternalLink, MessageCircle, Send } from 'lucide-react';
+import { Mail, Calendar, MapPin, Linkedin, ExternalLink, MessageCircle } from 'lucide-react';
+import ContactForm from './ContactForm';
 
 const ContactSection = () => {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted');
-  };
 
   const contactMethods = [
     {
       icon: <Mail className="w-5 h-5" />,
       title: 'Email',
-      value: 'chaitra.malladad@example.com',
-      description: 'Best for detailed inquiries'
+      value: 'contact@chaitravm.com',
+      description: 'Best for detailed inquiries',
+      link: 'mailto:contact@chaitravm.com'
     },
     {
       icon: <Calendar className="w-5 h-5" />,
       title: 'Schedule a Call',
-      value: 'calendly.com/chaitramalladad-proton/30min',
-      description: 'Book a 30-minute consultation',
+      value: 'Book a 30-minute consultation',
+      description: 'Available for security consultations',
       link: 'https://calendly.com/chaitramalladad-proton/30min'
     },
     {
@@ -34,14 +28,6 @@ const ContactSection = () => {
     }
   ];
 
-  const services = [
-    'Vulnerability Assessment',
-    'Penetration Testing',
-    'Security Auditing',
-    'Incident Response',
-    'Compliance Review',
-    'Security Training'
-  ];
 
   return (
     <section id="contact" className="section-padding bg-secondary/20">
@@ -142,77 +128,10 @@ const ContactSection = () => {
             <Card className="card-modern p-8">
               <h3 className="text-2xl font-semibold mb-6">Send a Secure Message</h3>
               <p className="text-sm text-muted-foreground mb-6">
-                All messages are encrypted and handled securely. Please provide detailed information about your security requirements.
+                All messages are encrypted and handled securely with advanced validation and CAPTCHA protection. Please provide detailed information about your security requirements.
               </p>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="firstName" className="text-sm font-medium">First Name</Label>
-                    <Input 
-                      id="firstName" 
-                      placeholder="John" 
-                      required
-                      className="bg-background border-border focus:border-primary transition-colors"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="lastName" className="text-sm font-medium">Last Name</Label>
-                    <Input 
-                      id="lastName" 
-                      placeholder="Doe" 
-                      required
-                      className="bg-background border-border focus:border-primary transition-colors"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm font-medium">Email Address</Label>
-                  <Input 
-                    id="email" 
-                    type="email" 
-                    placeholder="john.doe@company.com"
-                    required
-                    className="bg-background border-border focus:border-primary transition-colors"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="company" className="text-sm font-medium">Company (Optional)</Label>
-                  <Input 
-                    id="company" 
-                    placeholder="Your Company"
-                    className="bg-background border-border focus:border-primary transition-colors"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="subject" className="text-sm font-medium">Subject</Label>
-                  <Input 
-                    id="subject" 
-                    placeholder="Security Consultation Request"
-                    required
-                    className="bg-background border-border focus:border-primary transition-colors"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="message" className="text-sm font-medium">Message</Label>
-                  <Textarea 
-                    id="message" 
-                    placeholder="Tell me about your security requirements, current challenges, or any specific services you're interested in..."
-                    required
-                    minLength={20}
-                    className="min-h-32 bg-background border-border focus:border-primary transition-colors resize-none"
-                  />
-                </div>
-
-                <Button type="submit" className="w-full btn-primary group">
-                  <Send className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  Send Message
-                </Button>
-              </form>
+              <ContactForm />
             </Card>
           </div>
         </div>

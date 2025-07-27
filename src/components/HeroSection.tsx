@@ -146,7 +146,7 @@ const HeroSection = () => {
           {/* Professional highlights with glass effect */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 max-w-4xl mx-auto">
             {[
-              { number: '5+', label: 'Years Experience' },
+              { number: '5+', label: 'Years Experience Cybersecurity' },
               { number: 'Expertise in', label: 'Vulnerability Management & Threat Intelligence' },
               { number: 'GRC Analyst', label: '(Lead ISO Implementor)' }
             ].map((stat, index) => (
