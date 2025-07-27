@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Send } from 'lucide-react';
+import { Send, RefreshCw, AlertCircle } from 'lucide-react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useToast } from '@/hooks/use-toast';
 
@@ -17,8 +17,11 @@ const ContactForm = () => {
     message: ''
   });
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState<string>('');
+  const [captchaLoaded, setCaptchaLoaded] = useState<boolean>(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const captchaRef = useRef<ReCAPTCHA>(null);
   const { toast } = useToast();
 
   const validateField = (name: string, value: string) => {
@@ -84,6 +87,31 @@ const ContactForm = () => {
     validateField(name, value);
   };
 
+  const handleCaptchaChange = (value: string | null) => {
+    setCaptchaValue(value);
+    if (value) {
+      setCaptchaError('');
+    }
+  };
+
+  const handleCaptchaError = () => {
+    setCaptchaError('Failed to load CAPTCHA. Please refresh and try again.');
+    setCaptchaValue(null);
+  };
+
+  const handleCaptchaExpired = () => {
+    setCaptchaError('CAPTCHA has expired. Please complete it again.');
+    setCaptchaValue(null);
+  };
+
+  const resetCaptcha = () => {
+    if (captchaRef.current) {
+      captchaRef.current.reset();
+    }
+    setCaptchaValue(null);
+    setCaptchaError('');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -104,6 +132,7 @@ const ContactForm = () => {
 
     // Check CAPTCHA
     if (!captchaValue) {
+      setCaptchaError('Please complete the CAPTCHA verification.');
       toast({
         title: "CAPTCHA Required",
         description: "Please complete the CAPTCHA verification.",
@@ -112,18 +141,27 @@ const ContactForm = () => {
       return;
     }
 
+    // Clear any previous CAPTCHA errors
+    setCaptchaError('');
+
     setIsSubmitting(true);
 
     try {
-      // Simulate form submission - replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Validate CAPTCHA with backend (simulated)
+      console.log('Verifying CAPTCHA token:', captchaValue);
+      
+      // Simulate backend CAPTCHA verification
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
       toast({
         title: "Message Sent Successfully",
         description: "Your secure message has been sent. I'll get back to you within 24 hours.",
       });
 
-      // Reset form
+      // Reset form and CAPTCHA
       setFormData({
         firstName: '',
         lastName: '',
@@ -132,14 +170,17 @@ const ContactForm = () => {
         subject: '',
         message: ''
       });
-      setCaptchaValue(null);
+      resetCaptcha();
       
     } catch (error) {
+      console.error('Form submission error:', error);
       toast({
         title: "Error",
         description: "Failed to send message. Please try again later.",
         variant: "destructive"
       });
+      // Reset CAPTCHA on error for security
+      resetCaptcha();
     } finally {
       setIsSubmitting(false);
     }
@@ -274,18 +315,49 @@ const ContactForm = () => {
       </div>
 
       <div className="space-y-4">
-        <div className="flex justify-center">
-          <ReCAPTCHA
-            sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" // Test key - replace with actual site key
-            onChange={setCaptchaValue}
-            theme="dark"
-          />
+        <div className="space-y-2">
+          <Label className="text-sm font-medium">
+            Security Verification <span className="text-destructive">*</span>
+          </Label>
+          <div className="flex flex-col items-center space-y-2">
+            <div className="flex justify-center">
+              <ReCAPTCHA
+                ref={captchaRef}
+                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
+                onChange={handleCaptchaChange}
+                onErrored={handleCaptchaError}
+                onExpired={handleCaptchaExpired}
+                theme="dark"
+                size="normal"
+              />
+            </div>
+            
+            {captchaError && (
+              <div className="flex items-center gap-2 text-destructive text-sm">
+                <AlertCircle className="w-4 h-4" />
+                <span>{captchaError}</span>
+              </div>
+            )}
+            
+            {(captchaError || (!captchaValue && captchaLoaded)) && (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={resetCaptcha}
+                className="text-xs"
+              >
+                <RefreshCw className="w-3 h-3 mr-1" />
+                Refresh CAPTCHA
+              </Button>
+            )}
+          </div>
         </div>
 
         <Button 
           type="submit" 
           className="w-full btn-primary group"
-          disabled={isSubmitting || Object.keys(errors).length > 0 || !captchaValue}
+          disabled={isSubmitting || Object.keys(errors).length > 0 || !captchaValue || !!captchaError}
         >
           {isSubmitting ? (
             <>
