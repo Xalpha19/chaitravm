@@ -69,7 +69,9 @@ const ContactSection = () => {
                            method.title
                          )}
                        </h4>
-                       <p className="text-sm text-foreground font-mono">{method.value}</p>
+                        {method.title !== 'Email' && (
+                          <p className="text-sm text-foreground font-mono">{method.value}</p>
+                        )}
                        <p className="text-xs text-muted-foreground">{method.description}</p>
                      </div>
                    </div>
