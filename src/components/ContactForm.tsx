@@ -19,6 +19,7 @@ const ContactForm = () => {
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
   const [captchaError, setCaptchaError] = useState<string>('');
   const [captchaLoaded, setCaptchaLoaded] = useState<boolean>(false);
+  const [captchaKey, setCaptchaKey] = useState<number>(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const captchaRef = useRef<ReCAPTCHA>(null);
@@ -97,6 +98,7 @@ const ContactForm = () => {
   const handleCaptchaError = () => {
     setCaptchaError('Failed to load CAPTCHA. Please refresh and try again.');
     setCaptchaValue(null);
+    setCaptchaLoaded(false);
   };
 
   const handleCaptchaExpired = () => {
@@ -104,12 +106,16 @@ const ContactForm = () => {
     setCaptchaValue(null);
   };
 
+  const handleCaptchaLoaded = () => {
+    setCaptchaLoaded(true);
+    setCaptchaError('');
+  };
+
   const resetCaptcha = () => {
-    if (captchaRef.current) {
-      captchaRef.current.reset();
-    }
+    setCaptchaKey(prev => prev + 1);
     setCaptchaValue(null);
     setCaptchaError('');
+    setCaptchaLoaded(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -322,11 +328,13 @@ const ContactForm = () => {
           <div className="flex flex-col items-center space-y-2">
             <div className="flex justify-center">
               <ReCAPTCHA
+                key={captchaKey}
                 ref={captchaRef}
                 sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
                 onChange={handleCaptchaChange}
                 onErrored={handleCaptchaError}
                 onExpired={handleCaptchaExpired}
+                onLoad={handleCaptchaLoaded}
                 theme="dark"
                 size="normal"
               />
