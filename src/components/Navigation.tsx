@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Shield } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,11 +23,9 @@ const Navigation = () => {
   };
 
   const navItems = [
-    { label: 'Home', id: 'home' },
     { label: 'About', id: 'about' },
-    { label: 'Projects', id: 'projects' },
-    { label: 'Blog', id: 'blog' },
-    { label: 'Contact', id: 'contact' }
+    { label: 'Experience', id: 'experience' },
+    { label: 'Blog', id: 'blog' }
   ];
 
   return (
@@ -40,10 +38,12 @@ const Navigation = () => {
             className="flex items-center gap-3 cursor-pointer group"
             onClick={() => scrollToSection('home')}
           >
-            <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-              <Shield className="w-5 h-5 text-primary group-hover:text-primary-foreground" />
-            </div>
-            <span className="text-lg font-semibold">Chaitra M</span>
+            <img 
+              src="/lovable-uploads/37d1566b-26e1-4472-a182-c344759ba021.png" 
+              alt="CVM Logo" 
+              className="h-8 w-8 object-contain hover:scale-105 transition-transform duration-300"
+            />
+            <span className="text-lg font-semibold">Chaitra VM</span>
           </div>
 
           {/* Desktop Navigation */}
