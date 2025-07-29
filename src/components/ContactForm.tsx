@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Send, RefreshCw, AlertCircle } from 'lucide-react';
+import { Send, RefreshCw, AlertCircle, Loader2, Shield, CheckCircle } from 'lucide-react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useToast } from '@/hooks/use-toast';
 
@@ -19,11 +19,29 @@ const ContactForm = () => {
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
   const [captchaError, setCaptchaError] = useState<string>('');
   const [captchaLoaded, setCaptchaLoaded] = useState<boolean>(false);
+  const [captchaLoading, setCaptchaLoading] = useState<boolean>(true);
   const [captchaKey, setCaptchaKey] = useState<number>(0);
+  const [retryCount, setRetryCount] = useState<number>(0);
+  const [networkError, setNetworkError] = useState<boolean>(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const captchaRef = useRef<ReCAPTCHA>(null);
+  const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
+
+  // Environment and configuration
+  const isDevelopment = import.meta.env.VITE_ENVIRONMENT === 'development';
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
+  const isTestKey = siteKey === "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (retryTimeoutRef.current) {
+        clearTimeout(retryTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const validateField = (name: string, value: string) => {
     const newErrors = { ...errors };
@@ -90,32 +108,63 @@ const ContactForm = () => {
 
   const handleCaptchaChange = (value: string | null) => {
     setCaptchaValue(value);
+    setNetworkError(false);
     if (value) {
       setCaptchaError('');
+      setRetryCount(0);
     }
   };
 
   const handleCaptchaError = () => {
-    setCaptchaError('Failed to load CAPTCHA. Please refresh and try again.');
+    const errorMessage = networkError 
+      ? 'Network error loading CAPTCHA. Check your connection and try again.'
+      : 'Failed to load CAPTCHA. Please refresh and try again.';
+    
+    setCaptchaError(errorMessage);
     setCaptchaValue(null);
     setCaptchaLoaded(false);
+    setCaptchaLoading(false);
+    setNetworkError(true);
+    
+    // Auto-retry with exponential backoff (max 3 retries)
+    if (retryCount < 3) {
+      const retryDelay = Math.pow(2, retryCount) * 2000; // 2s, 4s, 8s
+      retryTimeoutRef.current = setTimeout(() => {
+        setRetryCount(prev => prev + 1);
+        resetCaptcha();
+      }, retryDelay);
+    }
   };
 
   const handleCaptchaExpired = () => {
     setCaptchaError('CAPTCHA has expired. Please complete it again.');
     setCaptchaValue(null);
+    toast({
+      title: "CAPTCHA Expired",
+      description: "Please complete the CAPTCHA verification again.",
+      variant: "destructive"
+    });
   };
 
   const handleCaptchaLoaded = () => {
     setCaptchaLoaded(true);
+    setCaptchaLoading(false);
     setCaptchaError('');
+    setNetworkError(false);
+    setRetryCount(0);
   };
 
   const resetCaptcha = () => {
+    if (retryTimeoutRef.current) {
+      clearTimeout(retryTimeoutRef.current);
+      retryTimeoutRef.current = null;
+    }
     setCaptchaKey(prev => prev + 1);
     setCaptchaValue(null);
     setCaptchaError('');
     setCaptchaLoaded(false);
+    setCaptchaLoading(true);
+    setNetworkError(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -321,64 +370,129 @@ const ContactForm = () => {
       </div>
 
       <div className="space-y-4">
-        <div className="space-y-2">
-          <Label className="text-sm font-medium">
-            Security Verification <span className="text-destructive">*</span>
-          </Label>
-          <div className="flex flex-col items-center space-y-2">
-            <div className="flex justify-center">
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Shield className="w-4 h-4 text-primary" />
+            <Label className="text-sm font-medium">
+              Security Verification <span className="text-destructive">*</span>
+            </Label>
+            {isTestKey && isDevelopment && (
+              <span className="text-xs bg-yellow-500/20 text-yellow-600 px-2 py-0.5 rounded border border-yellow-500/30">
+                TEST MODE
+              </span>
+            )}
+          </div>
+          
+          <div className="flex flex-col items-center space-y-3">
+            <div className="relative flex justify-center min-h-[78px] w-full">
+              {captchaLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm rounded-lg border border-border">
+                  <div className="flex flex-col items-center gap-2">
+                    <Loader2 className="w-5 h-5 animate-spin text-primary" />
+                    <span className="text-sm text-muted-foreground">Loading security verification...</span>
+                  </div>
+                </div>
+              )}
+              
               <ReCAPTCHA
                 key={captchaKey}
                 ref={captchaRef}
-                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
+                sitekey={siteKey}
                 onChange={handleCaptchaChange}
                 onErrored={handleCaptchaError}
                 onExpired={handleCaptchaExpired}
                 onLoad={handleCaptchaLoaded}
                 theme="dark"
                 size="normal"
+                className={captchaLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-300'}
               />
             </div>
             
-            {captchaError && (
-              <div className="flex items-center gap-2 text-destructive text-sm">
-                <AlertCircle className="w-4 h-4" />
-                <span>{captchaError}</span>
+            {/* Success indicator */}
+            {captchaValue && !captchaError && (
+              <div className="flex items-center gap-2 text-green-600 text-sm animate-in fade-in duration-300">
+                <CheckCircle className="w-4 h-4" />
+                <span>Verification completed successfully</span>
               </div>
             )}
             
+            {/* Error display */}
+            {captchaError && (
+              <div className="flex flex-col items-center gap-2 animate-in fade-in duration-300">
+                <div className="flex items-center gap-2 text-destructive text-sm">
+                  <AlertCircle className="w-4 h-4" />
+                  <span className="text-center">{captchaError}</span>
+                </div>
+                {retryCount > 0 && retryCount < 3 && (
+                  <div className="text-xs text-muted-foreground">
+                    Auto-retry {retryCount}/3 in progress...
+                  </div>
+                )}
+              </div>
+            )}
+            
+            {/* Retry button */}
             {(captchaError || (!captchaValue && captchaLoaded)) && (
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={resetCaptcha}
-                className="text-xs"
+                className="text-xs gap-1"
+                disabled={captchaLoading}
               >
-                <RefreshCw className="w-3 h-3 mr-1" />
-                Refresh CAPTCHA
+                {captchaLoading ? (
+                  <Loader2 className="w-3 h-3 animate-spin" />
+                ) : (
+                  <RefreshCw className="w-3 h-3" />
+                )}
+                {captchaLoading ? 'Loading...' : 'Refresh CAPTCHA'}
               </Button>
+            )}
+            
+            {/* Development helper */}
+            {isTestKey && isDevelopment && (
+              <div className="text-xs text-muted-foreground text-center max-w-md">
+                <p className="mb-1">🔧 Development Mode: Using Google's test key</p>
+                <p>Replace VITE_RECAPTCHA_SITE_KEY in .env for production</p>
+              </div>
             )}
           </div>
         </div>
 
         <Button 
           type="submit" 
-          className="w-full btn-primary group"
-          disabled={isSubmitting || Object.keys(errors).length > 0 || !captchaValue || !!captchaError}
+          className="w-full btn-primary group relative"
+          disabled={isSubmitting || Object.keys(errors).length > 0 || !captchaValue || !!captchaError || captchaLoading}
         >
           {isSubmitting ? (
             <>
-              <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-              Sending...
+              <Loader2 className="w-4 h-4 animate-spin" />
+              Sending Secure Message...
             </>
           ) : (
             <>
               <Send className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               Send Secure Message
+              {captchaValue && (
+                <CheckCircle className="w-4 h-4 ml-2 text-green-400" />
+              )}
             </>
           )}
         </Button>
+        
+        {/* Form status indicator */}
+        <div className="text-xs text-center text-muted-foreground">
+          {Object.keys(errors).length > 0 && (
+            <span className="text-destructive">Please fix form errors above</span>
+          )}
+          {Object.keys(errors).length === 0 && !captchaValue && !captchaError && captchaLoaded && (
+            <span>Complete the security verification to enable submission</span>
+          )}
+          {Object.keys(errors).length === 0 && captchaValue && (
+            <span className="text-green-600">Form ready for secure submission</span>
+          )}
+        </div>
       </div>
     </form>
   );
