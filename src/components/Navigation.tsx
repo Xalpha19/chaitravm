@@ -39,7 +39,7 @@ const Navigation = () => {
             onClick={() => scrollToSection('home')}
           >
             <img 
-              src="/lovable-uploads/528b417c-ab22-4927-b456-f5b6f8cabdd1.png" 
+              src="/lovable-uploads/c3452356-c51f-4438-83b6-0230015c91a9.png" 
               alt="CVM Logo" 
               className="h-8 w-8 object-contain hover:scale-105 transition-transform duration-300"
             />
