@@ -90,13 +90,24 @@ const ContactForm = () => {
   };
 
   const handleTurnstileVerify = (token: string) => {
+    console.log('Turnstile verification successful:', token.substring(0, 20) + '...');
     setTurnstileToken(token);
     setTurnstileError('');
+    toast({
+      title: "Security Verification Complete",
+      description: "You can now submit the form.",
+    });
   };
 
   const handleTurnstileError = () => {
+    console.log('Turnstile verification failed');
     setTurnstileToken(null);
     setTurnstileError('Security verification failed. Please try again.');
+    toast({
+      title: "Verification Failed",
+      description: "Please try the security verification again.",
+      variant: "destructive"
+    });
   };
 
   const handleTurnstileExpire = () => {
@@ -105,6 +116,7 @@ const ContactForm = () => {
   };
 
   const handleTurnstileLoad = () => {
+    console.log('Turnstile widget loaded successfully');
     setTurnstileLoaded(true);
   };
 

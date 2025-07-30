@@ -73,15 +73,15 @@ const TurnstileWidget = ({
   }
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative min-h-[65px] ${className}`}>
       {isLoading && (
-        <div className="flex items-center justify-center space-x-2 p-4 border border-border rounded-lg bg-muted/30">
+        <div className="flex items-center justify-center space-x-2 p-4 border border-border rounded-lg bg-muted/30 absolute inset-0">
           <Loader2 className="h-4 w-4 animate-spin text-primary" />
           <span className="text-sm text-muted-foreground">Loading security check...</span>
         </div>
       )}
       
-      <div className={isLoading ? 'absolute opacity-0' : 'block'}>
+      <div className={isLoading ? 'absolute opacity-0 pointer-events-none' : 'block'}>
         <Turnstile
           key={key}
           siteKey={siteKey}
