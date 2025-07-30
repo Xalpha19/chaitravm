@@ -113,7 +113,7 @@ const WorkExperienceSection = () => {
             Professional Experience
           </h2>
           <div className="w-16 h-1 bg-primary mx-auto mb-6"></div>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-justify">
             5+ years of cybersecurity expertise across threat intelligence, vulnerability assessment, 
             and enterprise security implementation.
           </p>
@@ -161,7 +161,7 @@ const WorkExperienceSection = () => {
                       <div className="space-y-2">
                         {exp.responsibilities.map((resp, respIndex) => <div key={respIndex} className="flex items-start gap-3 text-sm text-muted-foreground">
                             <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                            <span>{resp}</span>
+                            <span className="text-justify">{resp}</span>
                           </div>)}
                       </div>
                     </div>
@@ -213,7 +213,7 @@ const WorkExperienceSection = () => {
                   <Badge variant="outline" className="text-xs">{edu.grade}</Badge>
                 </div>
                 
-                <p className="text-xs text-muted-foreground leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed text-justify">
                   {edu.description}
                 </p>
                 
@@ -222,7 +222,7 @@ const WorkExperienceSection = () => {
                     <div className="space-y-1">
                       {edu.activities.map((activity, actIndex) => <div key={actIndex} className="flex items-start gap-2 text-xs text-muted-foreground">
                           <div className="w-1 h-1 bg-primary rounded-full mt-1.5 flex-shrink-0"></div>
-                          <span>{activity}</span>
+                          <span className="text-justify">{activity}</span>
                         </div>)}
                     </div>
                   </div>}
@@ -249,7 +249,7 @@ const WorkExperienceSection = () => {
                   <p className="text-sm font-medium">{cert.issuer}</p>
                   <Badge variant="outline" className="text-xs mt-2">{cert.status}</Badge>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed text-justify">
                   {cert.description}
                 </p>
               </div>
@@ -273,7 +273,7 @@ const WorkExperienceSection = () => {
                   </div>
                   <h4 className="font-semibold group-hover:text-primary transition-colors">{project.title}</h4>
                 </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed text-justify">
                   {project.description}
                 </p>
               </div>

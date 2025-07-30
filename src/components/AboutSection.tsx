@@ -25,7 +25,7 @@ const AboutSection = () => {
       <div className="container-modern">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-foreground mb-4">About Me</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-justify">
             Cybersecurity professional with expertise in vulnerability assessment, penetration testing, and threat intelligence.
           </p>
         </div>
@@ -53,11 +53,11 @@ const AboutSection = () => {
             <div className="space-y-4">
               <div className="border-l-2 border-primary/20 pl-4">
                 <h4 className="font-medium text-foreground">Antisiphone Training</h4>
-                <p className="text-sm text-muted-foreground">SOC Core Skills</p>
+                <p className="text-sm text-muted-foreground text-justify">SOC Core Skills</p>
               </div>
               <div className="border-l-2 border-primary/20 pl-4">
                 <h4 className="font-medium text-foreground">AWS Skills Center</h4>
-                <p className="text-sm text-muted-foreground">Cloud Practitioner</p>
+                <p className="text-sm text-muted-foreground text-justify">Cloud Practitioner</p>
               </div>
             </div>
           </Card>

@@ -37,7 +37,7 @@ const ContactSection = () => {
             Let's Work Together
           </h2>
           <div className="w-16 h-1 bg-primary mx-auto mb-6"></div>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-justify">
             Ready to strengthen your cybersecurity posture? Let's discuss how I can help 
             protect your organization from evolving threats.
           </p>
@@ -72,7 +72,7 @@ const ContactSection = () => {
                         {method.title !== 'Email' && (
                           <p className="text-sm text-foreground font-mono">{method.value}</p>
                         )}
-                       <p className="text-xs text-muted-foreground">{method.description}</p>
+                       <p className="text-xs text-muted-foreground text-justify">{method.description}</p>
                      </div>
                    </div>
                  ))}
@@ -129,7 +129,7 @@ const ContactSection = () => {
           <div className="lg:col-span-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <Card className="card-modern p-8">
               <h3 className="text-2xl font-semibold mb-6">Send a Secure Message</h3>
-              <p className="text-sm text-muted-foreground mb-6">
+              <p className="text-sm text-muted-foreground mb-6 text-justify">
                 All messages are encrypted and handled securely with advanced validation and CAPTCHA protection. Please provide detailed information about your security requirements.
               </p>
               

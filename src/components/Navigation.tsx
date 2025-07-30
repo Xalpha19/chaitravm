@@ -39,11 +39,11 @@ const Navigation = () => {
             onClick={() => scrollToSection('home')}
           >
             <img 
-              src="/lovable-uploads/37d1566b-26e1-4472-a182-c344759ba021.png" 
+              src="/lovable-uploads/528b417c-ab22-4927-b456-f5b6f8cabdd1.png" 
               alt="CVM Logo" 
               className="h-8 w-8 object-contain hover:scale-105 transition-transform duration-300"
             />
-            <span className="text-lg font-semibold">Chaitra VM</span>
+            <span className="text-lg font-semibold">CHAITRA VM</span>
           </div>
 
           {/* Desktop Navigation */}
