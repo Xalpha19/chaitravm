@@ -14,7 +14,7 @@ interface ContactFormData {
   company?: string;
   subject: string;
   message: string;
-  turnstileToken: string;
+  recaptchaToken: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -47,10 +47,10 @@ const handler = async (req: Request): Promise<Response> => {
       lastName: formData.lastName
     });
 
-    // Verify Turnstile token with Cloudflare
-    const turnstileSecret = Deno.env.get("TURNSTILE_SECRET_KEY");
-    if (!turnstileSecret) {
-      console.error("TURNSTILE_SECRET_KEY not configured");
+    // Verify reCAPTCHA token with Google
+    const recaptchaSecret = Deno.env.get("RECAPTCHA_SECRET_KEY");
+    if (!recaptchaSecret) {
+      console.error("RECAPTCHA_SECRET_KEY not configured");
       return new Response(JSON.stringify({ 
         error: "Server configuration error" 
       }), {
@@ -59,24 +59,24 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
 
-    console.log("Verifying Turnstile token...");
-    const turnstileVerify = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    console.log("Verifying reCAPTCHA token...");
+    const recaptchaVerify = await fetch("https://www.google.com/recaptcha/api/siteverify", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: new URLSearchParams({
-        secret: turnstileSecret,
-        response: formData.turnstileToken,
+        secret: recaptchaSecret,
+        response: formData.recaptchaToken,
         remoteip: clientIP,
       }).toString(),
     });
 
-    const turnstileResult = await turnstileVerify.json();
-    console.log("Turnstile verification result:", turnstileResult);
+    const recaptchaResult = await recaptchaVerify.json();
+    console.log("reCAPTCHA verification result:", recaptchaResult);
 
-    if (!turnstileResult.success) {
-      console.error("Turnstile verification failed:", turnstileResult);
+    if (!recaptchaResult.success) {
+      console.error("reCAPTCHA verification failed:", recaptchaResult);
       return new Response(JSON.stringify({ 
         error: "Security verification failed" 
       }), {
@@ -101,7 +101,7 @@ const handler = async (req: Request): Promise<Response> => {
         company: formData.company || null,
         subject: formData.subject,
         message: formData.message,
-        turnstile_token: formData.turnstileToken,
+        recaptcha_token: formData.recaptchaToken,
         ip_address: clientIP,
         user_agent: userAgent,
       })

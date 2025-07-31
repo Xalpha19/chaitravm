@@ -1,29 +1,29 @@
-import { Turnstile } from '@marsidev/react-turnstile';
-import { useEffect, useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useState, useRef } from 'react';
 import { Loader2, Shield, RefreshCw } from 'lucide-react';
 
-interface TurnstileWidgetProps {
+interface RecaptchaWidgetProps {
   onVerify: (token: string) => void;
   onError: () => void;
   onExpire: () => void;
   onLoad: () => void;
-  theme?: 'light' | 'dark' | 'auto';
+  theme?: 'light' | 'dark';
   className?: string;
 }
 
-const TurnstileWidget = ({ 
+const RecaptchaWidget = ({ 
   onVerify, 
   onError, 
   onExpire, 
   onLoad, 
-  theme = 'auto',
+  theme = 'light',
   className = '' 
-}: TurnstileWidgetProps) => {
+}: RecaptchaWidgetProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const [key, setKey] = useState(0);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
-  const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA';
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
 
   const handleSuccess = (token: string) => {
     setIsLoading(false);
@@ -48,9 +48,19 @@ const TurnstileWidget = ({
   };
 
   const resetWidget = () => {
-    setKey(prev => prev + 1);
+    if (recaptchaRef.current) {
+      recaptchaRef.current.reset();
+    }
     setIsLoading(true);
     setHasError(false);
+  };
+
+  const handleChange = (token: string | null) => {
+    if (token) {
+      handleSuccess(token);
+    } else {
+      handleExpire();
+    }
   };
 
   if (hasError) {
@@ -73,7 +83,7 @@ const TurnstileWidget = ({
   }
 
   return (
-    <div className={`relative min-h-[65px] ${className}`}>
+    <div className={`relative min-h-[78px] ${className}`}>
       {isLoading && (
         <div className="flex items-center justify-center space-x-2 p-4 border border-border rounded-lg bg-muted/30 absolute inset-0">
           <Loader2 className="h-4 w-4 animate-spin text-primary" />
@@ -82,23 +92,19 @@ const TurnstileWidget = ({
       )}
       
       <div className={isLoading ? 'absolute opacity-0 pointer-events-none' : 'block'}>
-        <Turnstile
-          key={key}
-          siteKey={siteKey}
-          onSuccess={handleSuccess}
-          onError={handleError}
-          onExpire={handleExpire}
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey={siteKey}
+          onChange={handleChange}
+          onErrored={handleError}
+          onExpired={handleExpire}
           onLoad={handleLoad}
-          options={{
-            theme,
-            size: 'normal',
-            action: 'contact-form',
-            cData: 'contact-submission'
-          }}
+          theme={theme}
+          size="normal"
         />
       </div>
     </div>
   );
 };
 
-export default TurnstileWidget;
+export default RecaptchaWidget;

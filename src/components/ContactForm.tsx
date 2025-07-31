@@ -5,7 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Send, Shield, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import TurnstileWidget from './TurnstileWidget';
+import RecaptchaWidget from './RecaptchaWidget';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -16,9 +16,9 @@ const ContactForm = () => {
     subject: '',
     message: ''
   });
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const [turnstileError, setTurnstileError] = useState<string>('');
-  const [turnstileLoaded, setTurnstileLoaded] = useState<boolean>(false);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const [recaptchaError, setRecaptchaError] = useState<string>('');
+  const [recaptchaLoaded, setRecaptchaLoaded] = useState<boolean>(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -89,20 +89,20 @@ const ContactForm = () => {
     validateField(name, value);
   };
 
-  const handleTurnstileVerify = (token: string) => {
-    console.log('Turnstile verification successful:', token.substring(0, 20) + '...');
-    setTurnstileToken(token);
-    setTurnstileError('');
+  const handleRecaptchaVerify = (token: string) => {
+    console.log('reCAPTCHA verification successful:', token.substring(0, 20) + '...');
+    setRecaptchaToken(token);
+    setRecaptchaError('');
     toast({
       title: "Security Verification Complete",
       description: "You can now submit the form.",
     });
   };
 
-  const handleTurnstileError = () => {
-    console.log('Turnstile verification failed');
-    setTurnstileToken(null);
-    setTurnstileError('Security verification failed. Please try again.');
+  const handleRecaptchaError = () => {
+    console.log('reCAPTCHA verification failed');
+    setRecaptchaToken(null);
+    setRecaptchaError('Security verification failed. Please try again.');
     toast({
       title: "Verification Failed",
       description: "Please try the security verification again.",
@@ -110,14 +110,14 @@ const ContactForm = () => {
     });
   };
 
-  const handleTurnstileExpire = () => {
-    setTurnstileToken(null);
-    setTurnstileError('Security verification expired. Please verify again.');
+  const handleRecaptchaExpire = () => {
+    setRecaptchaToken(null);
+    setRecaptchaError('Security verification expired. Please verify again.');
   };
 
-  const handleTurnstileLoad = () => {
-    console.log('Turnstile widget loaded successfully');
-    setTurnstileLoaded(true);
+  const handleRecaptchaLoad = () => {
+    console.log('reCAPTCHA widget loaded successfully');
+    setRecaptchaLoaded(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -138,9 +138,9 @@ const ContactForm = () => {
       return;
     }
 
-    // Check Turnstile
-    if (!turnstileToken) {
-      setTurnstileError('Please complete the security verification.');
+    // Check reCAPTCHA
+    if (!recaptchaToken) {
+      setRecaptchaError('Please complete the security verification.');
       toast({
         title: "Security Verification Required",
         description: "Please complete the security verification.",
@@ -165,7 +165,7 @@ const ContactForm = () => {
           company: formData.company,
           subject: formData.subject,
           message: formData.message,
-          turnstileToken: turnstileToken,
+          recaptchaToken: recaptchaToken,
         }
       });
 
@@ -181,7 +181,7 @@ const ContactForm = () => {
         description: "Your secure message has been sent and stored. I'll get back to you within 24 hours.",
       });
 
-      // Reset form and Turnstile
+      // Reset form and reCAPTCHA
       setFormData({
         firstName: '',
         lastName: '',
@@ -190,7 +190,7 @@ const ContactForm = () => {
         subject: '',
         message: ''
       });
-      setTurnstileToken(null);
+      setRecaptchaToken(null);
       
     } catch (error: any) {
       console.error('Form submission error:', error);
@@ -199,8 +199,8 @@ const ContactForm = () => {
         description: error.message || "Failed to send message. Please try again later.",
         variant: "destructive"
       });
-      // Reset Turnstile on error for security
-      setTurnstileToken(null);
+      // Reset reCAPTCHA on error for security
+      setRecaptchaToken(null);
     } finally {
       setIsSubmitting(false);
     }
@@ -341,32 +341,32 @@ const ContactForm = () => {
             <Label className="text-sm font-medium">
               Security Verification <span className="text-destructive">*</span>
             </Label>
-            {turnstileToken && (
+            {recaptchaToken && (
               <CheckCircle className="w-4 h-4 text-green-500" />
             )}
           </div>
           
           <div className="flex flex-col space-y-3">
-            <TurnstileWidget
-              onVerify={handleTurnstileVerify}
-              onError={handleTurnstileError}
-              onExpire={handleTurnstileExpire}
-              onLoad={handleTurnstileLoad}
-              theme="auto"
+            <RecaptchaWidget
+              onVerify={handleRecaptchaVerify}
+              onError={handleRecaptchaError}
+              onExpire={handleRecaptchaExpire}
+              onLoad={handleRecaptchaLoad}
+              theme="light"
             />
             
-            {turnstileError && (
+            {recaptchaError && (
               <div className="flex items-start space-x-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
                 <Shield className="h-4 w-4 text-destructive mt-0.5 flex-shrink-0" />
                 <div className="text-sm">
                   <p className="text-destructive font-medium">Verification Error</p>
-                  <p className="text-muted-foreground text-xs">{turnstileError}</p>
+                  <p className="text-muted-foreground text-xs">{recaptchaError}</p>
                 </div>
               </div>
             )}
             
             {/* Success indicator */}
-            {turnstileToken && !turnstileError && (
+            {recaptchaToken && !recaptchaError && (
               <div className="flex items-center gap-2 text-green-600 text-sm animate-in fade-in duration-300">
                 <CheckCircle className="w-4 h-4" />
                 <span>Verification completed successfully</span>
@@ -378,7 +378,7 @@ const ContactForm = () => {
         <Button 
           type="submit" 
           className="w-full btn-primary group relative"
-          disabled={isSubmitting || Object.keys(errors).length > 0 || !turnstileToken || !!turnstileError}
+          disabled={isSubmitting || Object.keys(errors).length > 0 || !recaptchaToken || !!recaptchaError}
         >
           {isSubmitting ? (
             <>
@@ -389,7 +389,7 @@ const ContactForm = () => {
             <>
               <Send className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               Send Secure Message
-              {turnstileToken && (
+              {recaptchaToken && (
                 <CheckCircle className="w-4 h-4 ml-2 text-green-400" />
               )}
             </>
@@ -401,10 +401,10 @@ const ContactForm = () => {
           {Object.keys(errors).length > 0 && (
             <span className="text-destructive">Please fix form errors above</span>
           )}
-          {Object.keys(errors).length === 0 && !turnstileToken && !turnstileError && turnstileLoaded && (
+          {Object.keys(errors).length === 0 && !recaptchaToken && !recaptchaError && recaptchaLoaded && (
             <span>Complete the security verification to enable submission</span>
           )}
-          {Object.keys(errors).length === 0 && turnstileToken && (
+          {Object.keys(errors).length === 0 && recaptchaToken && (
             <span className="text-green-600">Form ready for secure submission</span>
           )}
         </div>
