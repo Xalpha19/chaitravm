@@ -152,12 +152,33 @@ const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate form submission with Turnstile verification
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Send form data to Supabase edge function
+      console.log("Submitting form data...");
+      
+      const { supabase } = await import('@/integrations/supabase/client');
+      
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          company: formData.company,
+          subject: formData.subject,
+          message: formData.message,
+          turnstileToken: turnstileToken,
+        }
+      });
+
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw new Error(error.message || 'Failed to send message');
+      }
+
+      console.log('Form submission successful:', data);
       
       toast({
-        title: "Message Sent Successfully",
-        description: "Your secure message has been sent. I'll get back to you within 24 hours.",
+        title: "Message Sent Successfully! ✅",
+        description: "Your secure message has been sent and stored. I'll get back to you within 24 hours.",
       });
 
       // Reset form and Turnstile
@@ -171,11 +192,11 @@ const ContactForm = () => {
       });
       setTurnstileToken(null);
       
-    } catch (error) {
+    } catch (error: any) {
       console.error('Form submission error:', error);
       toast({
-        title: "Error",
-        description: "Failed to send message. Please try again later.",
+        title: "Error Sending Message",
+        description: error.message || "Failed to send message. Please try again later.",
         variant: "destructive"
       });
       // Reset Turnstile on error for security
