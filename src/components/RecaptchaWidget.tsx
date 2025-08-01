@@ -23,7 +23,7 @@ const RecaptchaWidget = ({
   const [hasError, setHasError] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
-  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
+  const siteKey = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'; // Google's test site key for localhost development
 
   const handleSuccess = (token: string) => {
     setIsLoading(false);
