@@ -59,6 +59,10 @@ const AboutSection = () => {
                 <h4 className="font-medium text-foreground">AWS Skills Center</h4>
                 <p className="text-sm text-muted-foreground text-justify">Cloud Practitioner</p>
               </div>
+              <div className="border-l-2 border-primary/20 pl-4">
+                <h4 className="font-medium text-foreground">Recognized as a distinguished Cybersecurity Mentor by EC-Council.</h4>
+                <p className="text-sm text-muted-foreground text-justify">for contributions to professional development and knowledge sharing within the cybersecurity community</p>
+              </div>
             </div>
           </Card>
         </div>
