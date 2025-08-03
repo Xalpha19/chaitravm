@@ -5,7 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Send, Shield, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import RecaptchaWidget from './RecaptchaWidget';
+import SimpleCaptcha from './RecaptchaWidget';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -347,7 +347,7 @@ const ContactForm = () => {
           </div>
           
           <div className="flex flex-col space-y-3">
-            <RecaptchaWidget
+            <SimpleCaptcha
               onVerify={handleRecaptchaVerify}
               onError={handleRecaptchaError}
               onExpire={handleRecaptchaExpire}

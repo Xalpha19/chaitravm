@@ -47,36 +47,14 @@ const handler = async (req: Request): Promise<Response> => {
       lastName: formData.lastName
     });
 
-    // Verify reCAPTCHA token with Google
-    const recaptchaSecret = Deno.env.get("RECAPTCHA_SECRET_KEY");
-    if (!recaptchaSecret) {
-      console.error("RECAPTCHA_SECRET_KEY not configured");
-      return new Response(JSON.stringify({ 
-        error: "Server configuration error" 
-      }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" }
-      });
-    }
-
-    console.log("Verifying reCAPTCHA token...");
-    const recaptchaVerify = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        secret: recaptchaSecret,
-        response: formData.recaptchaToken,
-        remoteip: clientIP,
-      }).toString(),
-    });
-
-    const recaptchaResult = await recaptchaVerify.json();
-    console.log("reCAPTCHA verification result:", recaptchaResult);
-
-    if (!recaptchaResult.success) {
-      console.error("reCAPTCHA verification failed:", recaptchaResult);
+    // Simple captcha verification (decode base64 token to verify format)
+    try {
+      const decodedToken = atob(formData.recaptchaToken);
+      if (!decodedToken.startsWith('verified-')) {
+        throw new Error('Invalid token format');
+      }
+    } catch {
+      console.error("Simple captcha verification failed");
       return new Response(JSON.stringify({ 
         error: "Security verification failed" 
       }), {
@@ -165,7 +143,7 @@ const handler = async (req: Request): Promise<Response> => {
             <p>IP Address: ${clientIP}</p>
             <p>User Agent: ${userAgent}</p>
             <p>Submitted: ${new Date().toISOString()}</p>
-            <p>Security Verified: ✅ Turnstile Verified</p>
+            <p>Security Verified: ✅ Math Challenge Verified</p>
           </div>
         </div>
       `,

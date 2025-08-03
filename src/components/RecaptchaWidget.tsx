@@ -1,110 +1,167 @@
-import ReCAPTCHA from 'react-google-recaptcha';
-import { useState, useRef } from 'react';
-import { Loader2, Shield, RefreshCw } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { RefreshCw, Shield } from 'lucide-react';
 
-interface RecaptchaWidgetProps {
+interface SimpleCaptchaProps {
   onVerify: (token: string) => void;
-  onError: () => void;
-  onExpire: () => void;
-  onLoad: () => void;
-  theme?: 'light' | 'dark';
+  onExpire?: () => void;
+  onError?: () => void;
+  onLoad?: () => void;
+  theme?: string;
   className?: string;
 }
 
-const RecaptchaWidget = ({ 
+const SimpleCaptcha: React.FC<SimpleCaptchaProps> = ({ 
   onVerify, 
-  onError, 
   onExpire, 
-  onLoad, 
-  theme = 'light',
+  onError, 
+  onLoad,
   className = '' 
-}: RecaptchaWidgetProps) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
+}) => {
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState('');
+  const [userInput, setUserInput] = useState('');
+  const [isVerified, setIsVerified] = useState(false);
+  const [attempts, setAttempts] = useState(0);
+  const [error, setError] = useState('');
 
-  const siteKey = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'; // Google's test site key for localhost development
-
-  const handleSuccess = (token: string) => {
-    setIsLoading(false);
-    setHasError(false);
-    onVerify(token);
-  };
-
-  const handleError = () => {
-    setIsLoading(false);
-    setHasError(true);
-    onError();
-  };
-
-  const handleExpire = () => {
-    setHasError(false);
-    onExpire();
-  };
-
-  const handleLoad = () => {
-    setIsLoading(false);
-    onLoad();
-  };
-
-  const resetWidget = () => {
-    if (recaptchaRef.current) {
-      recaptchaRef.current.reset();
+  const generateQuestion = () => {
+    const operations = ['+', '-', '*'];
+    const operation = operations[Math.floor(Math.random() * operations.length)];
+    
+    let num1, num2, result;
+    
+    switch (operation) {
+      case '+':
+        num1 = Math.floor(Math.random() * 20) + 1;
+        num2 = Math.floor(Math.random() * 20) + 1;
+        result = num1 + num2;
+        break;
+      case '-':
+        num1 = Math.floor(Math.random() * 20) + 10;
+        num2 = Math.floor(Math.random() * 10) + 1;
+        result = num1 - num2;
+        break;
+      case '*':
+        num1 = Math.floor(Math.random() * 10) + 1;
+        num2 = Math.floor(Math.random() * 10) + 1;
+        result = num1 * num2;
+        break;
+      default:
+        num1 = 5;
+        num2 = 3;
+        result = 8;
     }
-    setIsLoading(true);
-    setHasError(false);
+    
+    setQuestion(`${num1} ${operation} ${num2} = ?`);
+    setAnswer(result.toString());
+    setUserInput('');
+    setError('');
   };
 
-  const handleChange = (token: string | null) => {
-    if (token) {
-      handleSuccess(token);
+  useEffect(() => {
+    generateQuestion();
+    if (onLoad) {
+      onLoad();
+    }
+  }, [onLoad]);
+
+  const handleSubmit = () => {
+    if (userInput.trim() === answer) {
+      setIsVerified(true);
+      setError('');
+      // Generate a simple verification token
+      const token = btoa(`verified-${Date.now()}-${Math.random()}`);
+      onVerify(token);
     } else {
-      handleExpire();
+      setAttempts(prev => prev + 1);
+      setError('Incorrect answer. Please try again.');
+      
+      if (attempts >= 2) {
+        generateQuestion();
+        setAttempts(0);
+      }
+      
+      if (onError) {
+        onError();
+      }
     }
   };
 
-  if (hasError) {
-    return (
-      <div className={`flex flex-col items-center space-y-3 p-4 border border-destructive/20 rounded-lg bg-destructive/5 ${className}`}>
-        <div className="flex items-center space-x-2 text-destructive">
-          <Shield className="h-4 w-4" />
-          <span className="text-sm font-medium">Verification failed</span>
-        </div>
-        <button
-          type="button"
-          onClick={resetWidget}
-          className="flex items-center space-x-2 px-3 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <RefreshCw className="h-3 w-3" />
-          <span>Try again</span>
-        </button>
-      </div>
-    );
-  }
+  const handleRefresh = () => {
+    generateQuestion();
+    setAttempts(0);
+    setIsVerified(false);
+  };
 
   return (
-    <div className={`relative min-h-[78px] ${className}`}>
-      {isLoading && (
-        <div className="flex items-center justify-center space-x-2 p-4 border border-border rounded-lg bg-muted/30 absolute inset-0">
-          <Loader2 className="h-4 w-4 animate-spin text-primary" />
-          <span className="text-sm text-muted-foreground">Loading security check...</span>
+    <div className={`space-y-4 p-4 border border-border rounded-lg bg-muted/30 ${className}`}>
+      <div className="flex items-center gap-2 text-sm font-medium">
+        <Shield className="h-4 w-4 text-primary" />
+        Security Verification
+      </div>
+      
+      {isVerified ? (
+        <div className="flex items-center gap-2 text-green-600 text-sm">
+          <Shield className="h-4 w-4" />
+          Verification completed successfully
+        </div>
+      ) : (
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Label htmlFor="captcha-input" className="text-sm">
+              Solve: <span className="font-mono font-bold">{question}</span>
+            </Label>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={handleRefresh}
+              className="h-6 w-6 p-0"
+            >
+              <RefreshCw className="h-3 w-3" />
+            </Button>
+          </div>
+          
+          <div className="flex gap-2">
+            <Input
+              id="captcha-input"
+              type="number"
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              placeholder="Enter answer"
+              className="flex-1"
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleSubmit();
+                }
+              }}
+            />
+            <Button
+              type="button"
+              onClick={handleSubmit}
+              size="sm"
+              disabled={!userInput.trim()}
+            >
+              Verify
+            </Button>
+          </div>
+          
+          {error && (
+            <p className="text-sm text-destructive">{error}</p>
+          )}
+          
+          {attempts > 0 && (
+            <p className="text-xs text-muted-foreground">
+              Attempts: {attempts}/3
+            </p>
+          )}
         </div>
       )}
-      
-      <div className={isLoading ? 'absolute opacity-0 pointer-events-none' : 'block'}>
-        <ReCAPTCHA
-          ref={recaptchaRef}
-          sitekey={siteKey}
-          onChange={handleChange}
-          onErrored={handleError}
-          onExpired={handleExpire}
-          onLoad={handleLoad}
-          theme={theme}
-          size="normal"
-        />
-      </div>
     </div>
   );
 };
 
-export default RecaptchaWidget;
+export default SimpleCaptcha;
